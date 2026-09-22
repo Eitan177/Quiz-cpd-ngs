@@ -187,7 +187,6 @@
             description: "Core competency review covering CPD panels, variant classification, VAF dynamics, assay inputs, fusion design, databases, mutation patterns, splice sites, and predictive tools.",
             questions: [
                 {
-                    // Correct: Option B (Index 1)
                     question: "What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?",
                     options: [
                         { text: "Whole exome sequencing (WES), whole genome sequencing (WGS), Fusion gene panel, and Rapid Solid panels", isCorrect: false, rationale: "Incorrect. WES and WGS are not routine clinical panels offered by the CPD." },
@@ -198,7 +197,6 @@
                     hint: "Think about the combination of hybrid-capture NGS, fusion transcripts, rapid heme, and rapid solid assays for lung, thyroid, and melanoma."
                 },
                 {
-                    // Correct: Option C (Index 2)
                     question: "Which category in our somatic variant interpretation frameworks represents variants linked directly to FDA-approved therapies?",
                     options: [
                         { text: "Tier II - Variants of Potential Clinical Significance", isCorrect: false, rationale: "Incorrect. Tier II involves investigational therapies or evidence in different tumor types." },
@@ -209,7 +207,6 @@
                     hint: "Look for the tier linked specifically to FDA-approved therapeutic biomarkers."
                 },
                 {
-                    // Correct: Option D (Index 3)
                     question: "When evaluating variant allele frequency (VAF) from a tumor NGS panel given a known tumor purity of 40% in a heterozygous mutation, what is the expected approximate VAF for a somatic single nucleotide variant present in 100% of the tumor cells?",
                     options: [
                         { text: "40%", isCorrect: false, rationale: "Incorrect. 40% represents the overall tumor purity fraction, not the adjusted allele frequency for heterozygous somatic changes." },
@@ -220,7 +217,6 @@
                     hint: "Multiply the tumor purity fraction by the expected allele fraction (0.5 for a heterozygous mutation in pure tumor)."
                 },
                 {
-                    // Correct: Option A (Index 0)
                     question: "How many reported genes are evaluated in our PennSeq Solid 2.1 Panel versus our PennSeq Heme 2.1 Panel, and which key myeloid/leukemia driver genes are included in the overlapping gene set between both panels?",
                     options: [
                         { text: "Solid: 215 genes; Heme: 202 genes; Overlapping genes include `TP53`, `RUNX1`, `IDH1`, `IDH2`, `FLT3`, `KIT`, and `ASXL1`", isCorrect: true, rationale: "Correct! The PennSeq Solid 2.1 panel evaluates 215 genes, the Heme 2.1 panel covers 202 genes, and they share key overlapping cancer/myeloid drivers such as `TP53`, `RUNX1`, `IDH1`, `IDH2`, `FLT3`, `KIT`, and `ASXL1`." },
@@ -231,7 +227,6 @@
                     hint: "Review the current PennSeq 2.1 specifications on the CPD test menu (215 solid vs 202 heme genes)."
                 },
                 {
-                    // Correct: Option B (Index 1)
                     question: "How many reported genes are evaluated in our TEMP 2.0 (Targeted Expedited Mutation Panel) versus our HEXS 1.0 (Hematological Expedited Sequencing) Panel, and which key overlapping genes do they share?",
                     options: [
                         { text: "TEMP 2.0: 215 genes; HEXS 1.0: 202 genes; Overlapping genes include `EGFR` and `ALK` only", isCorrect: false, rationale: "Incorrect. 215 and 202 genes correspond to the comprehensive PennSeq Solid 2.1 and Heme 2.1 panels, not the expedited TEMP and HEXS assays." },
@@ -242,7 +237,6 @@
                     hint: "Recall the rapid expedited panel sizes: TEMP 2.0 (45 genes) and HEXS 1.0 (58 genes)."
                 },
                 {
-                    // Correct: Option C (Index 2)
                     question: "What is Tumor Mutational Burden (TMB), and how is it calculated in our clinical somatic NGS workflow?",
                     options: [
                         { text: "TMB is the total percentage of tumor nuclei present in an FFPE slide, calculated via automated H&E image segmentation.", isCorrect: false, rationale: "Incorrect. This describes tumor purity or cellularity, not mutational burden." },
@@ -253,7 +247,6 @@
                     hint: "Think about mutations per megabase (mut/Mb)."
                 },
                 {
-                    // Correct: Option D (Index 3)
                     question: "How does Variant Allele Frequency (VAF) differ fundamentally between a somatic mutation and a constitutional Single Nucleotide Polymorphism (SNP)?",
                     options: [
                         { text: "A somatic mutation always has a fixed VAF of exactly 50%, whereas an SNP varies wildly between 0% and 100%.", isCorrect: false, rationale: "Incorrect. Somatic mutations are subject to tumor purity and subclonal heterogeneity, making their VAF variable." },
@@ -264,7 +257,6 @@
                     hint: "Consider how tumor purity, subclonal heterogeneity, and copy number affect somatic mutations versus germline SNP zygosity (~50%)."
                 },
                 {
-                    // Correct: Option A (Index 0)
                     question: "When comparing a germline Single Nucleotide Polymorphism (SNP) to an inherited pathogenic cancer predisposing variant (such as in `BRCA1`), how do their population frequencies, clinical actions, and VAF profiles in constitutional tissue compare?",
                     options: [
                         { text: "An SNP is a common variant ($\\ge 1\\%$ population frequency) with a constitutional VAF of ~50% (heterozygous) that is generally benign, whereas an inherited predisposing variant is a rare, high-penetrance pathogenic germline alteration with a constitutional VAF of ~50% that increases lifetime cancer risk.", isCorrect: true, rationale: "Correct! Both are germline variants typically exhibiting a ~50% VAF in constitutional tissue, but they differ drastically in population frequency and clinical pathogenicity." },
@@ -275,7 +267,6 @@
                     hint: "Both share a constitutional VAF of ~50% when heterozygous, but differ in population frequency and disease risk."
                 },
                 {
-                    // Correct: Option B (Index 1)
                     question: "Between amplicon-based NGS assays and hybrid-capture-based NGS assays, which approach generally requires more input DNA, and why?",
                     options: [
                         { text: "Amplicon-based assays require more input DNA because multiplex PCR primers consume vast amounts of template material.", isCorrect: false, rationale: "Incorrect. Amplicon panels are specifically valued for low-input clinical samples (like small FFPE biopsies) because multiplex PCR exponential amplification requires minimal starting material." },
@@ -286,7 +277,6 @@
                     hint: "Think about why multiplex PCR works well on tiny biopsies (low input) whereas hybrid-capture needs more mass for efficient probe binding and library recovery."
                 },
                 {
-                    // Correct: Option C (Index 2)
                     question: "Does a targeted RNA fusion assay (such as anchored multiplex PCR or hybrid-capture RNA panels) require primers or capture probes designed for both partner genes to detect a rearrangement?",
                     options: [
                         { text: "Yes, you must design specific forward and reverse primers for every possible combination of both gene partners in advance.", isCorrect: false, rationale: "Incorrect. Requiring primers for both partners would prevent the detection of novel or unexpected fusion partners." },
@@ -297,7 +287,6 @@
                     hint: "Think about how anchored multiplex PCR allows the detection of *novel* fusion partners by targeting only the known partner gene."
                 },
                 {
-                    // Correct: Option D (Index 3)
                     question: "In our clinical molecular pathology workflow at UPenn, how do major bioinformatics and clinical databases like OncoKB, gnomAD, ClinVar, and COSMIC compare in their primary functions?",
                     options: [
                         { text: "OncoKB is used strictly for normal population allele frequencies, gnomAD for FDA-approved therapy matching, ClinVar for somatic cancer hotspots, and COSMIC for clinical pathogenicity aggregation.", isCorrect: false, rationale: "Incorrect. This mixes up the core functions of OncoKB, gnomAD, ClinVar, and COSMIC." },
@@ -308,7 +297,6 @@
                     hint: "Match OncoKB (FDA/therapy), gnomAD (population frequency), ClinVar (pathogenicity), and COSMIC (somatic hotspots)."
                 },
                 {
-                    // Correct: Option A (Index 0)
                     question: "How should ClinVar be utilized during clinical variant interpretation in molecular pathology, and why must entries be interpreted with caution?",
                     options: [
                         { text: "ClinVar entries should be read directly with caution because it is primarily focused on germline genetic variants and inherited conditions; therefore, classifications labeled as 'pathogenic' in ClinVar are occasionally not pathogenic or relevant in a somatic cancer context.", isCorrect: true, rationale: "Correct! Because ClinVar is heavily curated for hereditary and germline conditions, variant entries labeled as pathogenic must be evaluated critically, as a variant's clinical impact in constitutional germline testing may differ from its significance in somatic tumor profiling." },
@@ -319,7 +307,6 @@
                     hint: "Consider ClinVar's primary focus on germline/inherited conditions and why somatic interpretation requires independent evaluation."
                 },
                 {
-                    // Correct: Option B (Index 1)
                     question: "What are the typical patterns of somatic mutation distribution across oncogenes versus tumor suppressor genes in human cancers?",
                     options: [
                         { text: "Oncogenes only acquire large whole-chromosome deletions, whereas tumor suppressor genes exclusively contain point mutations at a single amino acid hotspot.", isCorrect: false, rationale: "Incorrect. This reverses the typical mutation mechanisms for oncogenes and tumor suppressors." },
@@ -330,7 +317,6 @@
                     hint: "Think about gain-of-function hotspots in oncogenes versus widespread loss-of-function truncations in tumor suppressors."
                 },
                 {
-                    // Correct: Option C (Index 2)
                     question: "Do the standard clinical molecular pathology databases (such as gnomAD, ClinVar, OncoKB, and COSMIC) consist purely of empirical clinical and population data, or do they also incorporate computational variant effect predictions?",
                     options: [
                         { text: "They consist 100% entirely of simulated computer algorithms without any real-world patient or population data.", isCorrect: false, rationale: "Incorrect. These databases are anchored in real empirical human data and case observations." },
@@ -341,7 +327,6 @@
                     hint: "Consider whether resources rely purely on empirical trial/population data or if in silico predictors are also integrated."
                 },
                 {
-                    // Correct: Option D (Index 3)
                     question: "Where do canonical splice site mutations typically occur within an intron, and what are the consensus dinucleotide sequences characteristic of these positions?",
                     options: [
                         { text: "Canonical splice site mutations occur exclusively in the middle of exons and always consist of `AT-CG` repeats.", isCorrect: false, rationale: "Incorrect. Splice sites occur at intron-exon boundaries, not within the center of exons." },
