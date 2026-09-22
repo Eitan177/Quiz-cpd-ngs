@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Custom Quiz Deployer</title>
+    <title>UPenn Clinical Molecular Pathology Trainee Assessment</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -15,7 +15,7 @@
             <div class="bg-indigo-500 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-500/30 font-black text-xl">⚡</div>
             <div>
                 <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">QuizForge</h1>
-                <p class="text-xs text-indigo-300 font-medium">Create, Play & Share Quizzes</p>
+                <p class="text-xs text-indigo-300 font-medium">UPenn Pathology Assessment</p>
             </div>
         </div>
         <div id="header-nav" class="flex space-x-3">
@@ -23,7 +23,7 @@
                 <span>➕</span><span>Create Quiz</span>
             </button>
             <button onclick="app.loadSampleQuiz()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl font-semibold text-sm transition">
-                Load Sample
+                Start Assessment
             </button>
         </div>
     </header>
@@ -34,17 +34,17 @@
         <!-- VIEW: HOME / WELCOME -->
         <div id="view-home" class="view-section text-center py-12 space-y-8">
             <div class="max-w-2xl mx-auto space-y-4">
-                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">Canvas Quiz Deployer</span>
-                <h2 class="text-4xl sm:text-5xl font-black tracking-tight leading-tight">Turn your custom questions into an interactive experience.</h2>
-                <p class="text-slate-300 text-lg">Build your custom quiz with multiple-choice questions, instant feedback, and custom scoring. Instantly export or share the configuration with anyone!</p>
+                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">CPD Training Module</span>
+                <h2 class="text-4xl sm:text-5xl font-black tracking-tight leading-tight">Clinical Molecular Pathology Trainee Assessment</h2>
+                <p class="text-slate-300 text-lg">Test your knowledge on NGS panels, variant classification, VAF dynamics, assay inputs, fusion design, clinical databases, mutation patterns, and splice sites.</p>
             </div>
             
             <div class="flex flex-wrap justify-center gap-4 pt-4">
-                <button onclick="app.switchView('builder')" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold text-base transition shadow-xl shadow-indigo-600/30 flex items-center space-x-3">
-                    <span>🚀</span><span>Create Your Own Quiz</span>
+                <button onclick="app.loadSampleQuiz()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold text-base transition shadow-xl shadow-indigo-600/30 flex items-center space-x-3">
+                    <span>🚀</span><span>Start Assessment Now</span>
                 </button>
-                <button onclick="app.loadSampleQuiz()" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-2xl font-bold text-base transition">
-                    Try Sample Quiz
+                <button onclick="app.switchView('builder')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-2xl font-bold text-base transition">
+                    Edit / Custom Builder
                 </button>
             </div>
 
@@ -105,7 +105,7 @@
             <div class="flex justify-between items-center bg-slate-800/50 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-700/60 shadow-lg">
                 <div>
                     <span id="player-quiz-title" class="text-xs font-bold uppercase tracking-wider text-indigo-400">Quiz Title</span>
-                    <h3 id="player-progress-text" class="text-lg font-black text-white">Question 1 of 5</h3>
+                    <h3 id="player-progress-text" class="text-lg font-black text-white">Question 1 of 15</h3>
                 </div>
                 <div class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full text-xs font-bold">
                     Score: <span id="player-current-score">0</span>
@@ -147,7 +147,7 @@
                 <div class="bg-slate-900/60 border border-slate-700/60 p-6 rounded-2xl flex justify-around items-center">
                     <div>
                         <div class="text-xs uppercase font-bold text-slate-400">Final Score</div>
-                        <div id="results-score-num" class="text-3xl font-black text-indigo-400">0/0</div>
+                        <div id="results-score-num" class="text-3xl font-black text-indigo-400">0/15</div>
                     </div>
                     <div class="h-10 w-px bg-slate-700"></div>
                     <div>
@@ -177,7 +177,7 @@
 
     <!-- Footer -->
     <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800">
-        QuizForge Canvas App &bull; Built for Interactive Learning & Assessment
+        UPenn Clinical Molecular Pathology Trainee Assessment &bull; Powered by QuizForge
     </footer>
 
     <!-- Application Script -->
@@ -642,24 +642,3 @@
     </script>
 </body>
 </html>
-```eof
-
-### Correct Answer Distribution Across Options (A, B, C, D):
-* **Q1:** Option B
-* **Q2:** Option C
-* **Q3:** Option D
-* **Q4:** Option A
-* **Q5:** Option B
-* **Q6:** Option C
-* **Q7:** Option D
-* **Q8:** Option A
-* **Q9:** Option B
-* **Q10:** Option C
-* **Q11:** Option D
-* **Q12:** Option A
-* **Q13:** Option B
-* **Q14:** Option C
-* **Q15:** Option D
-
-The correct answers are now evenly rotated across A, B, C, and D throughout the entire 15-question quiz!
-
