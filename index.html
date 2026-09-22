@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPenn Clinical Molecular Pathology Trainee Assessment</title>
+    <title>UPenn Clinical Molecular Pathology Assessment</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -212,25 +212,25 @@
                         { text: "40%", isCorrect: false, rationale: "Incorrect. 40% represents the overall tumor purity fraction, not the adjusted allele frequency for heterozygous somatic changes." },
                         { text: "50%", isCorrect: false, rationale: "Incorrect. 50% would assume a pure 100% tumor sample with loss of heterozygosity or a germline heterozygous variant." },
                         { text: "10%", isCorrect: false, rationale: "Incorrect. 10% underestimates the expected heterozygous fraction for a 40% cellular purity tumor." },
-                        { text: "20%", isCorrect: true, rationale: "Correct! With 40% tumor purity, tumor cells make up 40% of the sample (yielding 80% heterozygous alleles among tumor DNA) while normal cells contribute 0% mutant alleles, resulting in an expected VAF of 20% ($40\\% \\times 0.5$)." }
+                        { text: "20%", isCorrect: true, rationale: "Correct! With 40% tumor purity, tumor cells make up 40% of the sample (yielding 80% heterozygous alleles among tumor DNA) while normal cells contribute 0% mutant alleles, resulting in an expected VAF of 20% (40% * 0.5)." }
                     ],
                     hint: "Multiply the tumor purity fraction by the expected allele fraction (0.5 for a heterozygous mutation in pure tumor)."
                 },
                 {
                     question: "How many reported genes are evaluated in our PennSeq Solid 2.1 Panel versus our PennSeq Heme 2.1 Panel, and which key myeloid/leukemia driver genes are included in the overlapping gene set between both panels?",
                     options: [
-                        { text: "Solid: 215 genes; Heme: 202 genes; Overlapping genes include `TP53`, `RUNX1`, `IDH1`, `IDH2`, `FLT3`, `KIT`, and `ASXL1`", isCorrect: true, rationale: "Correct! The PennSeq Solid 2.1 panel evaluates 215 genes, the Heme 2.1 panel covers 202 genes, and they share key overlapping cancer/myeloid drivers such as `TP53`, `RUNX1`, `IDH1`, `IDH2`, `FLT3`, `KIT`, and `ASXL1`." },
-                        { text: "Solid: 153 genes; Heme: 68 genes; Overlapping genes include `EGFR`, `ALK`, `ROS1`, and `BRAF` only", isCorrect: false, rationale: "Incorrect. These counts reflect older legacy panel versions, and targetable lung fusions/mutations are unique to the solid tumor panel rather than overlapping with myeloid heme drivers." },
+                        { text: "Solid: 215 genes; Heme: 202 genes; Overlapping genes include TP53, RUNX1, IDH1, IDH2, FLT3, KIT, and ASXL1", isCorrect: true, rationale: "Correct! The PennSeq Solid 2.1 panel evaluates 215 genes, the Heme 2.1 panel covers 202 genes, and they share key overlapping cancer/myeloid drivers such as TP53, RUNX1, IDH1, IDH2, FLT3, KIT, and ASXL1." },
+                        { text: "Solid: 153 genes; Heme: 68 genes; Overlapping genes include EGFR, ALK, ROS1, and BRAF only", isCorrect: false, rationale: "Incorrect. These counts reflect older legacy panel versions, and targetable lung fusions/mutations are unique to the solid tumor panel rather than overlapping with myeloid heme drivers." },
                         { text: "Solid: 300 genes; Heme: 300 genes; Overlapping genes include all 300 genes identically", isCorrect: false, rationale: "Incorrect. The solid and heme panels are distinct assays tailored specifically for solid tumors and hematologic malignancies with tailored gene contents." },
-                        { text: "Solid: 50 genes; Heme: 50 genes; Overlapping genes include `BRCA1` and `BRCA2` only", isCorrect: false, rationale: "Incorrect. Panel sizes are significantly more comprehensive than 50 genes and cover broad targeted somatic hotspots." }
+                        { text: "Solid: 50 genes; Heme: 50 genes; Overlapping genes include BRCA1 and BRCA2 only", isCorrect: false, rationale: "Incorrect. Panel sizes are significantly more comprehensive than 50 genes and cover broad targeted somatic hotspots." }
                     ],
                     hint: "Review the current PennSeq 2.1 specifications on the CPD test menu (215 solid vs 202 heme genes)."
                 },
                 {
                     question: "How many reported genes are evaluated in our TEMP 2.0 (Targeted Expedited Mutation Panel) versus our HEXS 1.0 (Hematological Expedited Sequencing) Panel, and which key overlapping genes do they share?",
                     options: [
-                        { text: "TEMP 2.0: 215 genes; HEXS 1.0: 202 genes; Overlapping genes include `EGFR` and `ALK` only", isCorrect: false, rationale: "Incorrect. 215 and 202 genes correspond to the comprehensive PennSeq Solid 2.1 and Heme 2.1 panels, not the expedited TEMP and HEXS assays." },
-                        { text: "TEMP 2.0: 45 genes; HEXS 1.0: 58 genes; Overlapping genes include `TP53`, `KRAS`, `NRAS`, `KIT`, and `FLT3`", isCorrect: true, rationale: "Correct! TEMP 2.0 evaluates 45 genes (plus 13 fusion drivers/isoforms) for rapid solid tumors, HEXS 1.0 evaluates 58 genes for rapid hematologic malignancies, and they share key overlapping targetable driver genes such as `TP53`, `KRAS`, `NRAS`, `KIT`, and `FLT3`." },
+                        { text: "TEMP 2.0: 215 genes; HEXS 1.0: 202 genes; Overlapping genes include EGFR and ALK only", isCorrect: false, rationale: "Incorrect. 215 and 202 genes correspond to the comprehensive PennSeq Solid 2.1 and Heme 2.1 panels, not the expedited TEMP and HEXS assays." },
+                        { text: "TEMP 2.0: 45 genes; HEXS 1.0: 58 genes; Overlapping genes include TP53, KRAS, NRAS, KIT, and FLT3", isCorrect: true, rationale: "Correct! TEMP 2.0 evaluates 45 genes (plus 13 fusion drivers/isoforms) for rapid solid tumors, HEXS 1.0 evaluates 58 genes for rapid hematologic malignancies, and they share key overlapping targetable driver genes such as TP53, KRAS, NRAS, KIT, and FLT3." },
                         { text: "TEMP 2.0: 10 genes; HEXS 1.0: 10 genes; Overlapping genes include none", isCorrect: false, rationale: "Incorrect. Expedited panels cover a broader panel of immediate actionable hotspots." },
                         { text: "TEMP 2.0: 100 genes; HEXS 1.0: 100 genes; Overlapping genes include all genes identically", isCorrect: false, rationale: "Incorrect. TEMP and HEXS are separate rapid assays targeted for distinct solid versus myeloid rapid turnaround indications." }
                     ],
@@ -257,9 +257,9 @@
                     hint: "Consider how tumor purity, subclonal heterogeneity, and copy number affect somatic mutations versus germline SNP zygosity (~50%)."
                 },
                 {
-                    question: "When comparing a germline Single Nucleotide Polymorphism (SNP) to an inherited pathogenic cancer predisposing variant (such as in `BRCA1`), how do their population frequencies, clinical actions, and VAF profiles in constitutional tissue compare?",
+                    question: "When comparing a germline Single Nucleotide Polymorphism (SNP) to an inherited pathogenic cancer predisposing variant (such as in BRCA1), how do their population frequencies, clinical actions, and VAF profiles in constitutional tissue compare?",
                     options: [
-                        { text: "An SNP is a common variant ($\\ge 1\\%$ population frequency) with a constitutional VAF of ~50% (heterozygous) that is generally benign, whereas an inherited predisposing variant is a rare, high-penetrance pathogenic germline alteration with a constitutional VAF of ~50% that increases lifetime cancer risk.", isCorrect: true, rationale: "Correct! Both are germline variants typically exhibiting a ~50% VAF in constitutional tissue, but they differ drastically in population frequency and clinical pathogenicity." },
+                        { text: "An SNP is a common variant (>= 1% population frequency) with a constitutional VAF of ~50% (heterozygous) that is generally benign, whereas an inherited predisposing variant is a rare, high-penetrance pathogenic germline alteration with a constitutional VAF of ~50% that increases lifetime cancer risk.", isCorrect: true, rationale: "Correct! Both are germline variants typically exhibiting a ~50% VAF in constitutional tissue, but they differ drastically in population frequency and clinical pathogenicity." },
                         { text: "An SNP has a VAF of 10% in blood, while an inherited predisposing variant has a VAF of 90%.", isCorrect: false, rationale: "Incorrect. Heterozygous germline variants in constitutional DNA show a VAF of ~50% regardless of pathogenicity." },
                         { text: "Inherited cancer predisposing variants are somatic mutations found exclusively in necrotic tumor cores.", isCorrect: false, rationale: "Incorrect. Predisposing variants are constitutional germline alterations." },
                         { text: "SNPs are exclusively found on sex chromosomes, whereas cancer predisposing variants are strictly autosomal.", isCorrect: false, rationale: "Incorrect. Both can occur across autosomes and sex chromosomes." }
@@ -281,10 +281,10 @@
                     options: [
                         { text: "Yes, you must design specific forward and reverse primers for every possible combination of both gene partners in advance.", isCorrect: false, rationale: "Incorrect. Requiring primers for both partners would prevent the detection of novel or unexpected fusion partners." },
                         { text: "Fusion assays do not use primers or probes at all; they rely entirely on untargeted whole genome shotgun sequencing.", isCorrect: false, rationale: "Incorrect. Clinical fusion panels are targeted assays." },
-                        { text: "No, primers or probes are only required for the known fusion partner (e.g., `ALK`, `ROS1`, `RET`, or `NTRK`), allowing the assay to detect novel or unknown fusion partners by capturing sequences adjacent to the known gene breakpoint.", isCorrect: true, rationale: "Correct! Anchored multiplex PCR (AMP) and similar RNA fusion assays only require designed primers/probes for the 'known' partner gene. This design enables the discovery of completely novel, uncharacterized fusion partner genes through one-way targeted amplification." },
+                        { text: "No, primers or probes are only required for the known fusion partner (e.g., ALK, ROS1, RET, or NTRK), allowing the assay to detect novel or unknown fusion partners by capturing sequences adjacent to the known gene breakpoint.", isCorrect: true, rationale: "Correct! Anchored multiplex PCR (AMP) and similar RNA fusion assays only require designed primers/probes for the 'known' partner gene. This design enables the discovery of completely novel, uncharacterized fusion partner genes through one-way targeted amplification." },
                         { text: "Primers are only required if both genes are located on the exact same chromosome.", isCorrect: false, rationale: "Incorrect. Chromosomal location does not dictate primer design requirements for RNA fusion panels." }
                     ],
-                    hint: "Think about how anchored multiplex PCR allows the detection of *novel* fusion partners by targeting only the known partner gene."
+                    hint: "Think about how anchored multiplex PCR allows the detection of novel fusion partners by targeting only the known partner gene."
                 },
                 {
                     question: "In our clinical molecular pathology workflow at UPenn, how do major bioinformatics and clinical databases like OncoKB, gnomAD, ClinVar, and COSMIC compare in their primary functions?",
@@ -329,12 +329,12 @@
                 {
                     question: "Where do canonical splice site mutations typically occur within an intron, and what are the consensus dinucleotide sequences characteristic of these positions?",
                     options: [
-                        { text: "Canonical splice site mutations occur exclusively in the middle of exons and always consist of `AT-CG` repeats.", isCorrect: false, rationale: "Incorrect. Splice sites occur at intron-exon boundaries, not within the center of exons." },
-                        { text: "Canonical splice sites are located 5,000 base pairs downstream of the polyadenylation tail and consist entirely of `AAAA` runs.", isCorrect: false, rationale: "Incorrect. This describes untranslated regions, not splice junctions." },
-                        { text: "Splice site mutations only occur inside promoter CpG islands and have no conserved intronic sequences.", isCorrect: false, rationale: "Incorrect. Promoter regions regulate transcription initiation, whereas splice sites govern pre-mRNA splicing via invariant `GT-AG` motifs." },
-                        { text: "Canonical splice site mutations typically occur at the invariant dinucleotides located precisely at the first two bases of the 5' end of the intron (donor splice site: `GT`) and the last two bases of the 3' end of the intron (acceptor splice site: `AG`).", isCorrect: true, rationale: "Correct! Almost all human introns begin with `GT` at the 5' donor site and end with `AG` at the 3' acceptor site. Mutations directly disrupting these invariant consensus dinucleotides frequently result in aberrant splicing, exon skipping, or intron retention." }
+                        { text: "Canonical splice site mutations occur exclusively in the middle of exons and always consist of AT-CG repeats.", isCorrect: false, rationale: "Incorrect. Splice sites occur at intron-exon boundaries, not within the center of exons." },
+                        { text: "Canonical splice sites are located 5,000 base pairs downstream of the polyadenylation tail and consist entirely of AAAA runs.", isCorrect: false, rationale: "Incorrect. This describes untranslated regions, not splice junctions." },
+                        { text: "Splice site mutations only occur inside promoter CpG islands and have no conserved intronic sequences.", isCorrect: false, rationale: "Incorrect. Promoter regions regulate transcription initiation, whereas splice sites govern pre-mRNA splicing via invariant GT-AG motifs." },
+                        { text: "Canonical splice site mutations typically occur at the invariant dinucleotides located precisely at the first two bases of the 5' end of the intron (donor splice site: GT) and the last two bases of the 3' end of the intron (acceptor splice site: AG).", isCorrect: true, rationale: "Correct! Almost all human introns begin with GT at the 5' donor site and end with AG at the 3' acceptor site. Mutations directly disrupting these invariant consensus dinucleotides frequently result in aberrant splicing, exon skipping, or intron retention." }
                     ],
-                    hint: "Think about the invariant 5' donor (`GT`) and 3' acceptor (`AG`) intronic dinucleotides."
+                    hint: "Think about the invariant 5' donor (GT) and 3' acceptor (AG) intronic dinucleotides."
                 }
             ]
         };
@@ -354,7 +354,10 @@
             switchView(viewName) {
                 this.currentView = viewName;
                 document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-                document.getElementById(`view-${viewName}`).classList.remove('hidden');
+                const targetView = document.getElementById(`view-${viewName}`);
+                if (targetView) {
+                    targetView.classList.remove('hidden');
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
                 if (viewName === 'builder') {
@@ -445,8 +448,10 @@
             }
 
             collectBuilderData() {
-                this.currentQuiz.title = document.getElementById('builder-title').value || "Untitled Quiz";
-                this.currentQuiz.description = document.getElementById('builder-desc').value || "";
+                const titleEl = document.getElementById('builder-title');
+                const descEl = document.getElementById('builder-desc');
+                if (titleEl) this.currentQuiz.title = titleEl.value || "Untitled Quiz";
+                if (descEl) this.currentQuiz.description = descEl.value || "";
             }
 
             saveAndTestQuiz() {
@@ -465,7 +470,8 @@
                     userAnswers: new Array(this.currentQuiz.questions.length).fill(null),
                     isAnswerChecked: false
                 };
-                document.getElementById('player-quiz-title').textContent = this.currentQuiz.title;
+                const titleEl = document.getElementById('player-quiz-title');
+                if (titleEl) titleEl.textContent = this.currentQuiz.title;
                 this.renderPlayerQuestion();
             }
 
@@ -473,11 +479,16 @@
                 const idx = this.playerState.currentIndex;
                 const q = this.currentQuiz.questions[idx];
                 
-                document.getElementById('player-progress-text').textContent = `Question ${idx + 1} of${this.currentQuiz.questions.length}`;
-                document.getElementById('player-current-score').textContent = this.playerState.score;
-                document.getElementById('player-question-text').textContent = q.question;
+                const progEl = document.getElementById('player-progress-text');
+                const scoreEl = document.getElementById('player-current-score');
+                const qTextEl = document.getElementById('player-question-text');
+
+                if (progEl) progEl.textContent = `Question ${idx + 1} of${this.currentQuiz.questions.length}`;
+                if (scoreEl) scoreEl.textContent = this.playerState.score;
+                if (qTextEl) qTextEl.textContent = q.question;
 
                 const optionsContainer = document.getElementById('player-options-container');
+                if (!optionsContainer) return;
                 optionsContainer.innerHTML = '';
 
                 const selectedOption = this.playerState.userAnswers[idx];
@@ -511,26 +522,30 @@
 
                 // Feedback box
                 const feedbackBox = document.getElementById('player-feedback-box');
-                if (isChecked) {
+                if (isChecked && feedbackBox) {
                     feedbackBox.classList.remove('hidden');
-                    const correctOpt = q.options.find(o => o.isCorrect);
                     const userOpt = q.options[selectedOption];
                     const isCorrect = userOpt && userOpt.isCorrect;
 
                     feedbackBox.className = `p-4 rounded-2xl border text-sm space-y-1 ${isCorrect ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200' : 'bg-rose-950/40 border-rose-500/40 text-rose-200'}`;
-                    document.getElementById('player-feedback-title').innerHTML = isCorrect ? '<span>✅ Correct!</span>' : '<span>❌ Incorrect</span>';
-                    document.getElementById('player-feedback-text').textContent = userOpt ? userOpt.rationale : (q.hint || "Review core concept.");
-                } else {
+                    const titleEl = document.getElementById('player-feedback-title');
+                    const textEl = document.getElementById('player-feedback-text');
+                    if (titleEl) titleEl.innerHTML = isCorrect ? '<span>✅ Correct!</span>' : '<span>❌ Incorrect</span>';
+                    if (textEl) textEl.textContent = userOpt ? userOpt.rationale : (q.hint || "Review core concept.");
+                } else if (feedbackBox) {
                     feedbackBox.classList.add('hidden');
                 }
 
                 // Nav Buttons
-                document.getElementById('btn-prev').disabled = (idx === 0);
+                const prevBtn = document.getElementById('btn-prev');
                 const nextBtn = document.getElementById('btn-next');
-                if (!isChecked) {
-                    nextBtn.textContent = "Check Answer";
-                } else {
-                    nextBtn.textContent = (idx === this.currentQuiz.questions.length - 1) ? "View Results" : "Next Question";
+                if (prevBtn) prevBtn.disabled = (idx === 0);
+                if (nextBtn) {
+                    if (!isChecked) {
+                        nextBtn.textContent = "Check Answer";
+                    } else {
+                        nextBtn.textContent = (idx === this.currentQuiz.questions.length - 1) ? "View Results" : "Next Question";
+                    }
                 }
             }
 
@@ -575,16 +590,21 @@
                 const score = this.playerState.score;
                 const pct = Math.round((score / total) * 100);
 
-                document.getElementById('results-score-num').textContent = `${score}/${total}`;
-                document.getElementById('results-percentage').textContent = `${pct}%`;
+                const scoreNum = document.getElementById('results-score-num');
+                const percentage = document.getElementById('results-percentage');
+                const subtitle = document.getElementById('results-subtitle');
+
+                if (scoreNum) scoreNum.textContent = `${score}/${total}`;
+                if (percentage) percentage.textContent = `${pct}%`;
                 
-                let subtitle = "Great effort! Keep practicing.";
-                if (pct === 100) subtitle = "Perfect score! Outstanding mastery!";
-                else if (pct >= 80) subtitle = "Fantastic job! You know your stuff.";
-                document.getElementById('results-subtitle').textContent = subtitle;
+                let subText = "Great effort! Keep practicing.";
+                if (pct === 100) subText = "Perfect score! Outstanding mastery!";
+                else if (pct >= 80) subText = "Fantastic job! You know your stuff.";
+                if (subtitle) subtitle.textContent = subText;
 
                 const encoded = btoa(encodeURIComponent(JSON.stringify(this.currentQuiz)));
-                document.getElementById('share-link-input').value = encoded;
+                const shareInput = document.getElementById('share-link-input');
+                if (shareInput) shareInput.value = encoded;
             }
 
             restartQuiz() {
@@ -593,9 +613,11 @@
 
             copyShareCode() {
                 const input = document.getElementById('share-link-input');
-                input.select();
-                navigator.clipboard.writeText(input.value);
-                alert("Quiz share code copied to clipboard! Share it with anyone to let them play your quiz.");
+                if (input) {
+                    input.select();
+                    document.execCommand('copy');
+                    alert("Quiz share code copied to clipboard!");
+                }
             }
 
             importQuizString() {
@@ -615,7 +637,7 @@
             }
 
             escapeHtml(text) {
-                return text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                return text.replace(/\"/g, '&quot;').replace(/\'/g, '&#39;');
             }
 
             formatMarkdownInline(text) {
