@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPenn Clinical Molecular Pathology Assessment</title>
+    <title>UPenn Clinical Molecular Pathology Trainee Assessment</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -375,10 +375,13 @@
             }
 
             renderBuilder() {
-                document.getElementById('builder-title').value = this.currentQuiz.title || '';
-                document.getElementById('builder-desc').value = this.currentQuiz.description || '';
+                const titleEl = document.getElementById('builder-title');
+                const descEl = document.getElementById('builder-desc');
+                if (titleEl) titleEl.value = this.currentQuiz.title || '';
+                if (descEl) descEl.value = this.currentQuiz.description || '';
                 
                 const container = document.getElementById('builder-questions-container');
+                if (!container) return;
                 container.innerHTML = '';
 
                 this.currentQuiz.questions.forEach((q, qIdx) => {
