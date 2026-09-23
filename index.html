@@ -5,329 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UPenn Clinical Molecular Pathology Trainee Assessment</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <style>
-    body {
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    .question-card {
-      scroll-margin-top: 90px;
-    }
-  </style>
+  <style>body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.question-card{scroll-margin-top:90px}</style>
 </head>
 <body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col font-sans">
-  <header class="w-full py-5 px-8 border-b border-slate-800 bg-slate-950 flex justify-between items-center sticky top-0 z-50">
-    <div>
-      <h1 class="text-lg font-bold text-white">UPenn Clinical Molecular Pathology Trainee Assessment</h1>
-      <p class="text-xs text-slate-400">Core Competency Review Module</p>
-    </div>
-    <div class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-4 py-1.5 rounded-xl text-xs font-bold">
-      Score: <span id="quiz-score">0</span> / <span id="quiz-total">15</span>
-    </div>
-  </header>
-
-  <main class="flex-1 max-w-4xl w-full mx-auto p-6">
-    <div id="quiz-card" class="bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6">
-      <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-indigo-400">
-        <span>Clinical Genomics Assessment</span>
-        <span id="answered-count">0 / 15 answered</span>
-      </div>
-
-      <div id="questions-container" class="space-y-5"></div>
-
-      <div class="flex justify-between items-center pt-4 border-t border-slate-700 gap-4">
-        <p id="submission-status" class="text-xs text-slate-400">Answer all questions to submit.</p>
-        <button id="btn-submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed" type="button" disabled>
-          Submit Assessment
-        </button>
-      </div>
-    </div>
-
-    <div id="results-card" class="hidden bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6 text-center max-w-xl mx-auto w-full">
-      <div class="text-5xl">🏆</div>
-      <h3 class="text-2xl font-black text-white">Assessment Complete</h3>
-      <p class="text-slate-300 text-sm">You scored <span id="final-score">0</span> out of <span id="final-total">15</span>.</p>
-      <button id="btn-reset" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold mx-auto" type="button">
-        Retake Quiz
-      </button>
-    </div>
-  </main>
-
-  <footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-800">
-    UPenn Clinical Molecular Pathology Trainee Assessment &bull; Standalone Edition
-  </footer>
-
-  <script>
-    const quizData = [
-      {
-        question: 'What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?',
-        options: [
-          ['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma', true, 'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma.'],
-          ['Only solid tumor panels and whole-exome sequencing', false, 'Incorrect. CPD also offers hematologic and rapid panels.'],
-          ['Only hematologic malignancy panels and RNA profiling', false, 'Incorrect. Solid tumor and rapid panels are also included.'],
-          ['Fusion gene testing and liquid biopsy only', false, 'Incorrect. A broader panel portfolio is offered.']
-        ]
-      },
-      {
-        question: 'Which category in our somatic variant interpretation frameworks represents variants linked directly to FDA-approved therapies?',
-        options: [
-          ['Tier II - Variants of Potential Clinical Significance', false, 'That category reflects actionable but not yet FDA-approved evidence.'],
-          ['Tier I - Variants with Strong Clinical Significance', true, 'Correct. These are the variants directly tied to FDA-approved therapies.'],
-          ['Tier III - Variants of Unknown Significance', false, 'These are not yet clinically validated.'],
-          ['Tier IV - Benign variants', false, 'Benign events are not treated as actionable.']
-        ]
-      },
-      {
-        question: 'With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant present in all tumor cells?',
-        options: [
-          ['20%', true, 'Correct. A heterozygous variant in all tumor cells at 40% purity gives roughly 20% VAF.'],
-          ['40%', false, 'That is purity, not the expected variant allele fraction.'],
-          ['50%', false, 'A 50% VAF would suggest a pure diploid tumor cell population.'],
-          ['80%', false, 'This would be too high for a heterozygous somatic variant at 40% purity.']
-        ]
-      },
-      {
-        question: 'How many genes are evaluated in the PennSeq Solid 2.1 versus Heme 2.1 panels?',
-        options: [
-          ['Solid: 215; Heme: 202', true, 'Correct. The PennSeq Solid 2.1 and Heme 2.1 panels evaluate 215 and 202 genes, respectively.'],
-          ['Solid: 202; Heme: 215', false, 'Incorrect. The panel sizes are reversed.'],
-          ['Solid: 45; Heme: 58', false, 'Those values correspond to a different assay set.'],
-          ['Solid: 58; Heme: 45', false, 'Those values do not match the PennSeq panel counts.']
-        ]
-      },
-      {
-        question: 'How many genes are evaluated in TEMP 2.0 versus HEXS 1.0?',
-        options: [
-          ['TEMP 45; HEXS 58', true, 'Correct. TEMP 2.0 and HEXS 1.0 evaluate 45 and 58 genes, respectively.'],
-          ['TEMP 215; HEXS 202', false, 'Those counts correspond to the broader PennSeq panels.'],
-          ['TEMP 58; HEXS 45', false, 'This reverses the correct pairings.'],
-          ['TEMP 90; HEXS 120', false, 'Those numbers are not consistent with the listed assays.']
-        ]
-      },
-      {
-        question: 'What is Tumor Mutational Burden (TMB)?',
-        options: [
-          ['The number of somatic mutations per megabase of DNA', true, 'Correct. TMB is often measured as mutations per megabase in the tumor genome.'],
-          ['The percentage of nuclei that are tumor cells', false, 'That describes tumor purity or cellularity.'],
-          ['The fraction of normal tissue in a specimen', false, 'This is not the definition of TMB.'],
-          ['The amount of germline DNA in the sample', false, 'This is unrelated to TMB.']
-        ]
-      },
-      {
-        question: 'How does VAF differ between somatic mutations and constitutional SNPs?',
-        options: [
-          ['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%', true, 'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs usually show stable germline ratios.'],
-          ['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%).', false, 'Incorrect. Somatic variants often vary with purity and copy number.'],
-          ['Constitutional SNPs generally have higher VAFs than somatic mutations because they are always present in every cell at 100%.', false, 'Incorrect. Constitutional SNPs are usually present in a fixed germline copy state, but not necessarily 100% across all cells.'],
-          ['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.', false, 'Incorrect. VAF can provide useful context but does not alone distinguish all variants.']
-        ]
-      },
-      {
-        question: 'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',
-        options: [
-          ['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant', true, 'Correct. Population frequency and clinical relevance are central to the distinction.'],
-          ['Both are inherited germline variants, but pathogenic cancer-predisposing variants are typically found at lower VAFs than common SNPs.', false, 'Incorrect. The distinction is not based on VAF.'],
-          ['Common SNPs and pathogenic predisposition variants are distinguished primarily by VAF, with pathogenic variants usually occurring at <20% VAF.', false, 'Incorrect. VAF is not the main discriminator.'],
-          ['Both can be present in the germline at similar VAFs, but pathogenic predisposition variants are associated with increased cancer risk whereas common SNPs are generally not.', false, 'Incorrect. Similar VAFs do not distinguish pathogenic from benign variants.']
-        ]
-      },
-      {
-        question: 'Which NGS approach generally requires more input DNA?',
-        options: [
-          ['Hybrid-capture assays, because they often need more library input than amplicon assays', true, 'Correct. Hybrid-capture methods typically require more DNA input.'],
-          ['Amplicon assays, because amplification of target regions requires a larger starting amount of DNA to achieve adequate coverage.', false, 'Incorrect. Amplicon assays are generally more efficient for limited DNA.'],
-          ['Hybrid-capture and amplicon assays generally require similar DNA input because both ultimately sequence the same genomic regions.', false, 'Incorrect. Assay design and target complexity differ materially.'],
-          ['The required DNA input is determined solely by sequencing depth and is independent of whether a hybrid-capture or amplicon approach is used.', false, 'Incorrect. DNA input depends on assay design, not just sequencing depth.']
-        ]
-      },
-      {
-        question: 'Do targeted RNA fusion assays require primers or probes for both partner genes?',
-        options: [
-          ['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement', true, 'Correct. RNA fusion assays must interrogate both ends or both partners for robust detection.'],
-          ['No. One gene is always enough', false, 'Incorrect. Fusion detection generally requires both partners or a common breakpoint design.'],
-          ['Only for DNA assays', false, 'RNA fusion assays are a distinct class of testing.'],
-          ['Only if the tumor is low purity', false, 'This is not the reason.']
-        ]
-      },
-      {
-        question: 'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',
-        options: [
-          ['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations', true, 'Correct. Those resources support oncology genomics interpretation in distinct but complementary roles.'],
-          ['OncoKB: sequencing chemistry; gnomAD: RNA fusion detection; ClinVar: coverage metrics; COSMIC: tumor purity', false, 'Incorrect. The functions are different.'],
-          ['OncoKB: DNA repair pathways; gnomAD: copy-number tools; ClinVar: tumor burden; COSMIC: sequencing primers', false, 'No—those are not the core functions.'],
-          ['OncoKB: variant pathology; gnomAD: germline variant genes; ClinVar: tumor mutation counts; COSMIC: therapeutic targets', false, 'Not the primary roles of these datasets.']
-        ]
-      },
-      {
-        question: 'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',
-        options: [
-          ['Because many ClinVar classifications are based on germline disease contexts and may not directly translate to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and often requires cancer-specific contextualization.'],
-          ['Because many ClinVar classifications are based on somatic tumor evidence and may not directly translate to inherited disease risk', false, 'ClinVar contains extensive germline-oriented clinical significance data.'],
-          ['Because ClinVar primarily reports population allele frequencies, which may not reflect the clinical significance of a variant', false, 'Population allele frequencies are primarily obtained from other resources.'],
-          ['Because ClinVar classifications are primarily organized around tumor-specific therapeutic actionability rather than variant pathogenicity', false, 'ClinVar focuses on clinical significance rather than therapeutic actionability alone.']
-        ]
-      },
-      {
-        question: 'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',
-        options: [
-          ['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations', true, 'Correct. This is the classic functional distinction used in cancer genomics.'],
-          ['Oncogenes are always deletions and tumor suppressors are always duplications', false, 'Incorrect. This reverses the common pattern.'],
-          ['All mutations are equally distributed across both classes', false, 'No. Functional consequences differ by gene class.'],
-          ['Only oncogenes are found in germline cancer syndromes', false, 'Both may contribute to inherited cancer predisposition.']
-        ]
-      },
-      {
-        question: 'Do clinical genomics databases incorporate computational variant-effect predictions?',
-        options: [
-          ['Yes. They commonly integrate computational predictions along with experimental and clinical evidence', true, 'Correct. These tools often combine multiple evidence types.'],
-          ['No. They rely only on manual review', false, 'Most resources also incorporate computational annotation.'],
-          ['Only when a variant is rare', false, 'This is not the full rule.'],
-          ['Only for RNA variants', false, 'They can apply across DNA and RNA variant curation.']
-        ]
-      },
-      {
-        question: 'Where are canonical splice sites located, and what are their consensus dinucleotides?',
-        options: [
-          ['At exon-intron boundaries; donor GT and acceptor AG', true, 'Correct. Canonical splice donor and acceptor sites are GT and AG.'],
-          ['At promoter regions; donor AA and acceptor TT', false, 'Incorrect. Splice sites are at intron/exon junctions.'],
-          ['At 3′ UTRs; donor AT and acceptor AC', false, 'Incorrect. Canonical splice sites are not these.'],
-          ['At coding regions only; donor CT and acceptor GA', false, 'This does not reflect canonical splice site consensus.']
-        ]
-      },
-      {
-        question: 'Which statement best describes a high-confidence clinical somatic variant in NGS interpretation?',
-        options: [
-          ['It is supported by evidence from the tumor context, allele fraction, copy-number context, and validated databases', true, 'Correct. A robust interpretation requires integrating multiple evidence types.'],
-          ['It is any variant seen at 50% VAF', false, 'This is too simplistic and often not clinically sufficient.'],
-          ['It is only a germline variant found in a reference panel', false, 'This is not how somatic interpretation works.'],
-          ['It must be present in all cells and all tissues', false, 'Not necessarily; somatic variants are often heterogeneous.']
-        ]
-      }
-    ];
-
-    class SimpleQuizEngine {
-      constructor(questions) {
-        this.questions = questions;
-        this.score = 0;
-        this.userAnswers = Array(this.questions.length).fill(null);
-
-        this.quizScore = document.getElementById('quiz-score');
-        this.quizTotal = document.getElementById('quiz-total');
-        this.answeredCount = document.getElementById('answered-count');
-        this.questionsContainer = document.getElementById('questions-container');
-        this.submitBtn = document.getElementById('btn-submit');
-        this.submissionStatus = document.getElementById('submission-status');
-        this.quizCard = document.getElementById('quiz-card');
-        this.resultsCard = document.getElementById('results-card');
-        this.finalScore = document.getElementById('final-score');
-        this.finalTotal = document.getElementById('final-total');
-        this.btnReset = document.getElementById('btn-reset');
-
-        this.quizTotal.textContent = this.questions.length;
-        this.submitBtn.addEventListener('click', () => this.submitQuiz());
-        this.btnReset.addEventListener('click', () => this.resetQuiz());
-
-        this.renderQuestions();
-      }
-
-      updateScore() {
-        let score = 0;
-        this.userAnswers.forEach((answerIndex, idx) => {
-          if (answerIndex !== null && this.questions[idx].options[answerIndex][1]) {
-            score += 1;
-          }
-        });
-        this.score = score;
-        this.quizScore.textContent = this.score;
-
-        const answered = this.userAnswers.filter((answer) => answer !== null).length;
-        this.answeredCount.textContent = `${answered} / ${this.questions.length} answered`;
-
-        const allAnswered = answered === this.questions.length;
-        this.submitBtn.disabled = !allAnswered;
-        this.submissionStatus.textContent = allAnswered
-          ? 'All questions answered — ready to submit.'
-          : 'Answer all questions to submit.';
-      }
-
-      renderQuestions() {
-        this.questionsContainer.innerHTML = '';
-
-        this.questions.forEach((question, questionIndex) => {
-          const selectedIndex = this.userAnswers[questionIndex];
-          const panel = document.createElement('div');
-          panel.className = 'question-card bg-slate-900/60 border border-slate-700 rounded-2xl p-5 space-y-4';
-
-          const header = document.createElement('div');
-          header.className = 'flex items-center justify-between gap-3';
-          header.innerHTML = `<span class="text-xs uppercase tracking-[0.2em] font-bold text-indigo-400">Question ${questionIndex + 1}</span>`;
-          panel.appendChild(header);
-
-          const prompt = document.createElement('h3');
-          prompt.className = 'text-lg font-bold text-white leading-snug';
-          prompt.textContent = question.question;
-          panel.appendChild(prompt);
-
-          const optionList = document.createElement('div');
-          optionList.className = 'space-y-3';
-
-          question.options.forEach(([label, isCorrect, feedback], optionIndex) => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            const isSelected = selectedIndex === optionIndex;
-            button.className = 'w-full text-left p-4 rounded-2xl border transition-all ' +
-              (isSelected
-                ? 'border-indigo-500 bg-indigo-500/10 text-white'
-                : 'border-slate-700 bg-slate-800/50 text-slate-200 hover:border-slate-500 hover:bg-slate-800');
-            button.innerHTML = `<span class="font-semibold mr-2">${String.fromCharCode(65 + optionIndex)}.</span> ${label}`;
-
-            button.addEventListener('click', () => {
-              this.userAnswers[questionIndex] = optionIndex;
-              this.renderQuestions();
-            });
-
-            optionList.appendChild(button);
-          });
-
-          panel.appendChild(optionList);
-
-          if (selectedIndex !== null) {
-            const [selectedLabel, isCorrect, feedback] = question.options[selectedIndex];
-            const feedbackBox = document.createElement('div');
-            feedbackBox.className = 'p-4 rounded-2xl border text-sm space-y-1';
-            feedbackBox.innerHTML = `
-              <div class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-amber-300'}">${isCorrect ? 'Correct' : 'Not quite'}</div>
-              <div class="text-slate-300 text-xs">${feedback}</div>
-            `;
-            panel.appendChild(feedbackBox);
-          }
-
-          this.questionsContainer.appendChild(panel);
-        });
-
-        this.updateScore();
-      }
-
-      submitQuiz() {
-        if (this.userAnswers.some((answer) => answer === null)) {
-          return;
-        }
-
-        this.quizCard.classList.add('hidden');
-        this.resultsCard.classList.remove('hidden');
-        this.finalScore.textContent = this.score;
-        this.finalTotal.textContent = this.questions.length;
-      }
-
-      resetQuiz() {
-        this.userAnswers = Array(this.questions.length).fill(null);
-        this.resultsCard.classList.add('hidden');
-        this.quizCard.classList.remove('hidden');
-        this.renderQuestions();
-      }
-    }
-
-    const quizApp = new SimpleQuizEngine(quizData);
-  </script>
-</body>
-</html>
+<header class="w-full py-5 px-8 border-b border-slate-800 bg-slate-950 flex justify-between items-center sticky top-0 z-50"><div><h1 class="text-lg font-bold text-white">UPenn Clinical Molecular Pathology Trainee Assessment</h1><p class="text-xs text-slate-400">Core Competency Review Module</p></div><div class="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-4 py-1.5 rounded-xl text-xs font-bold">Score: <span id="quiz-score">0</span> / <span id="quiz-total">15</span></div></header>
+<main class="flex-1 max-w-4xl w-full mx-auto p-6"><div id="quiz-card" class="bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6"><div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-indigo-400"><span>Clinical Genomics Assessment</span><span id="answered-count">0 / 15 answered</span></div><div id="questions-container" class="space-y-5"></div><div class="flex justify-between items-center pt-4 border-t border-slate-700 gap-4"><p id="submission-status" class="text-xs text-slate-400">Answer all questions to submit.</p><button id="btn-submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed" type="button" disabled>Submit Assessment</button></div></div><div id="results-card" class="hidden bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6 text-center max-w-xl mx-auto w-full"><div class="text-5xl">🏆</div><h3 class="text-2xl font-black text-white">Assessment Complete</h3><p class="text-slate-300 text-sm">You scored <span id="final-score">0</span> out of <span id="final-total">15</span>.</p><button id="btn-reset" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold mx-auto" type="button">Retake Quiz</button></div></main>
+<footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-800">UPenn Clinical Molecular Pathology Trainee Assessment &bull; Standalone Edition</footer>
+<script>
+const quizData=[
+{question:'What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?',options:[
+['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma',true,'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma.'],
+['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, Rapid Solid panels, and whole-exome sequencing',false,'Incorrect. This includes several CPD offerings, but whole-exome sequencing is not part of this CPD panel set.'],
+['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, RNA sequencing, and liquid-biopsy testing',false,'Incorrect. This includes several CPD offerings, but RNA sequencing and liquid-biopsy testing are not the listed CPD panel offerings.'],
+['Hybrid-capture panels for solid tumors, Rapid Solid panels, Rapid Heme, whole-genome sequencing, and methylation profiling',false,'Incorrect. This includes several real assay categories, but omits the hematologic hybrid-capture and Fusion gene panels and adds tests not offered in this panel set.']
+]},
+{question:'Which category in our somatic variant interpretation frameworks represents variants linked directly to FDA-approved therapies?',options:[['Tier II - Variants of Potential Clinical Significance',false,'That category reflects actionable but not yet FDA-approved evidence.'],['Tier I - Variants with Strong Clinical Significance',true,'Correct. These are the variants directly tied to FDA-approved therapies.'],['Tier III - Variants of Unknown Significance',false,'These are not yet clinically validated.'],['Tier IV - Benign variants',false,'Benign events are not treated as actionable.']]},
+{question:'With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant present in all tumor cells?',options:[['20%',true,'Correct. A heterozygous variant in all tumor cells at 40% purity gives roughly 20% VAF.'],['40%',false,'That is purity, not the expected variant allele fraction.'],['50%',false,'A 50% VAF would suggest a pure diploid tumor cell population.'],['80%',false,'This would be too high for a heterozygous somatic variant at 40% purity.']]},
+{question:'How many genes are evaluated in the PennSeq Solid 2.1 versus Heme 2.1 panels?',options:[['Solid: 215; Heme: 202',true,'Correct. The PennSeq Solid 2.1 and Heme 2.1 panels evaluate 215 and 202 genes, respectively.'],['Solid: 202; Heme: 215',false,'Incorrect. The panel sizes are reversed.'],['Solid: 45; Heme: 58',false,'Those values correspond to a different assay set.'],['Solid: 58; Heme: 45',false,'Those values do not match the PennSeq panel counts.']]},
+{question:'How many genes are evaluated in TEMP 2.0 versus HEXS 1.0?',options:[['TEMP 45; HEXS 58',true,'Correct. TEMP 2.0 and HEXS 1.0 evaluate 45 and 58 genes, respectively.'],['TEMP 215; HEXS 202',false,'Those counts correspond to the broader PennSeq panels.'],['TEMP 58; HEXS 45',false,'This reverses the correct pairings.'],['TEMP 90; HEXS 120',false,'Those numbers are not consistent with the listed assays.']]},
+{question:'What is Tumor Mutational Burden (TMB)?',options:[['The number of somatic mutations per megabase of DNA',true,'Correct. TMB is often measured as mutations per megabase in the tumor genome.'],['The percentage of nuclei that are tumor cells',false,'That describes tumor purity or cellularity.'],['The fraction of normal tissue in a specimen',false,'This is not the definition of TMB.'],['The amount of germline DNA in the sample',false,'This is unrelated to TMB.']]},
+{question:'How does VAF differ between somatic mutations and constitutional SNPs?',options:[['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%',true,'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs usually show stable germline ratios.'],['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%).',false,'Incorrect. Somatic variants often vary with purity and copy number.'],['Constitutional SNPs generally have higher VAFs than somatic mutations because they are always present in every cell at 100%.',false,'Incorrect. Constitutional SNPs are usually present in a fixed germline copy state, but not necessarily 100% across all cells.'],['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.',false,'Incorrect. VAF can provide useful context but does not alone distinguish all variants.']]},
+{question:'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',options:[['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant',true,'Correct. Population frequency and clinical relevance are central to the distinction.'],['Both are inherited germline variants, but pathogenic cancer-predisposing variants are typically found at lower VAFs than common SNPs.',false,'Incorrect. The distinction is not based on VAF.'],['Common SNPs and pathogenic predisposition variants are distinguished primarily by VAF, with pathogenic variants usually occurring at <20% VAF.',false,'Incorrect. VAF is not the main discriminator.'],['Both can be present in the germline at similar VAFs, but pathogenic predisposition variants are associated with increased cancer risk whereas common SNPs are generally not.',false,'Incorrect. Similar VAFs do not distinguish pathogenic from benign variants.']]},
+{question:'Which NGS approach generally requires more input DNA?',options:[['Hybrid-capture assays, because they often need more library input than amplicon assays',true,'Correct. Hybrid-capture methods typically require more DNA input.'],['Amplicon assays, because amplification of target regions requires a larger starting amount of DNA to achieve adequate coverage.',false,'Incorrect. Amplicon assays are generally more efficient for limited DNA.'],['Hybrid-capture and amplicon assays generally require similar DNA input because both ultimately sequence the same genomic regions.',false,'Incorrect. Assay design and target complexity differ materially.'],['The required DNA input is determined solely by sequencing depth and is independent of whether a hybrid-capture or amplicon approach is used.',false,'Incorrect. DNA input depends on assay design, not just sequencing depth.']]},
+{question:'Do targeted RNA fusion assays require primers or probes for both partner genes?',options:[['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement',true,'Correct. RNA fusion assays must interrogate both ends or both partners for robust detection.'],['No. One gene is always enough',false,'Incorrect. Fusion detection generally requires both partners or a common breakpoint design.'],['Only for DNA assays',false,'RNA fusion assays are a distinct class of testing.'],['Only if the tumor is low purity',false,'This is not the reason.']]},
+{question:'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',options:[['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations',true,'Correct. Those resources support oncology genomics interpretation in distinct but complementary roles.'],['OncoKB: sequencing chemistry; gnomAD: RNA fusion detection; ClinVar: coverage metrics; COSMIC: tumor purity',false,'Incorrect. The functions are different.'],['OncoKB: DNA repair pathways; gnomAD: copy-number tools; ClinVar: tumor burden; COSMIC: sequencing primers',false,'No—those are not the core functions.'],['OncoKB: variant pathology; gnomAD: germline variant genes; ClinVar: tumor mutation counts; COSMIC: therapeutic targets',false,'Not the primary roles of these datasets.']]},
+{question:'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',options:[['Because many ClinVar classifications are based on germline disease contexts and may not directly translate to somatic cancer relevance',true,'Correct. ClinVar is heavily germline-focused and often requires cancer-specific contextualization.'],['Because many ClinVar classifications are based on somatic tumor evidence and may not directly translate to inherited disease risk',false,'ClinVar contains extensive germline-oriented clinical significance data.'],['Because ClinVar primarily reports population allele frequencies, which may not reflect the clinical significance of a variant',false,'Population allele frequencies are primarily obtained from other resources.'],['Because ClinVar classifications are primarily organized around tumor-specific therapeutic actionability rather than variant pathogenicity',false,'ClinVar focuses on clinical significance rather than therapeutic actionability alone.']]},
+{question:'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',options:[['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations',true,'Correct. This is the classic functional distinction used in cancer genomics.'],['Oncogenes are always deletions and tumor suppressors are always duplications',false,'Incorrect. This reverses the common pattern.'],['All mutations are equally distributed across both classes',false,'No. Functional consequences differ by gene class.'],['Only oncogenes are found in germline cancer syndromes',false,'Both may contribute to inherited cancer predisposition.']]},
+{question:'Do clinical genomics databases incorporate computational variant-effect predictions?',options:[['Yes. They commonly integrate computational predictions along with experimental and clinical evidence',true,'Correct. These tools often combine multiple evidence types.'],['No. They rely only on manual review',false,'Most resources also incorporate computational annotation.'],['Only when a variant is rare',false,'This is not the full rule.'],['Only for RNA variants',false,'They can apply across DNA and RNA variant curation.']]},
+{question:'Where are canonical splice sites located, and what are their consensus dinucleotides?',options:[['At exon-intron boundaries; donor GT and acceptor AG',true,'Correct. Canonical splice donor and acceptor sites are GT and AG.'],['At promoter regions; donor AA and acceptor TT',false,'Incorrect. Splice sites are at intron/exon junctions.'],['At 3′ UTRs; donor AT and acceptor AC',false,'Incorrect. Canonical splice sites are not these.'],['At coding regions only; donor CT and acceptor GA',false,'This does not reflect canonical splice site consensus.']]},
+{question:'Which statement best describes a high-confidence clinical somatic variant in NGS interpretation?',options:[['It is supported by evidence from the tumor context, allele fraction, copy-number context, and validated databases',true,'Correct. A robust interpretation requires integrating multiple evidence types.'],['It is any variant seen at 50% VAF',false,'This is too simplistic and often not clinically sufficient.'],['It is only a germline variant found in a reference panel',false,'This is not how somatic interpretation works.'],['It must be present in all cells and all tissues',false,'Not necessarily; somatic variants are often heterogeneous.']]}
+];
+class SimpleQuizEngine{constructor(questions){this.questions=questions;this.score=0;this.userAnswers=Array(questions.length).fill(null);this.quizScore=document.getElementById('quiz-score');this.quizTotal=document.getElementById('quiz-total');this.answeredCount=document.getElementById('answered-count');this.questionsContainer=document.getElementById('questions-container');this.submitBtn=document.getElementById('btn-submit');this.submissionStatus=document.getElementById('submission-status');this.quizCard=document.getElementById('quiz-card');this.resultsCard=document.getElementById('results-card');this.finalScore=document.getElementById('final-score');this.finalTotal=document.getElementById('final-total');this.btnReset=document.getElementById('btn-reset');this.quizTotal.textContent=questions.length;this.submitBtn.addEventListener('click',()=>this.submitQuiz());this.btnReset.addEventListener('click',()=>this.resetQuiz());this.renderQuestions()}updateScore(){this.score=this.userAnswers.reduce((total,a,i)=>total+(a!==null&&this.questions[i].options[a][1]?1:0),0);this.quizScore.textContent=this.score;const answered=this.userAnswers.filter(a=>a!==null).length;this.answeredCount.textContent=`${answered} / ${this.questions.length} answered`;const complete=answered===this.questions.length;this.submitBtn.disabled=!complete;this.submissionStatus.textContent=complete?'All questions answered — ready to submit.':'Answer all questions to submit.'}renderQuestions(){this.questionsContainer.innerHTML='';this.questions.forEach((q,qi)=>{const selected=this.userAnswers[qi],panel=document.createElement('div');panel.className='question-card bg-slate-900/60 border border-slate-700 rounded-2xl p-5 space-y-4';panel.innerHTML=`<span class="text-xs uppercase tracking-[0.2em] font-bold text-indigo-400">Question ${qi+1}</span><h3 class="text-lg font-bold text-white leading-snug">${q.question}</h3>`;const list=document.createElement('div');list.className='space-y-3';q.options.forEach(([label,correct,feedback],oi)=>{const button=document.createElement('button');button.type='button';button.className='w-full text-left p-4 rounded-2xl border transition-all '+(selected===oi?'border-indigo-500 bg-indigo-500/10 text-white':'border-slate-700 bg-slate-800/50 text-slate-200 hover:border-slate-500 hover:bg-slate-800');button.innerHTML=`<span class="font-semibold mr-2">${String.fromCharCode(65+oi)}.</span> ${label}`;button.addEventListener('click',()=>{this.userAnswers[qi]=oi;this.renderQuestions()});list.appendChild(button)});panel.appendChild(list);if(selected!==null){const [label,correct,feedback]=q.options[selected],box=document.createElement('div');box.className='p-4 rounded-2xl border text-sm space-y-1';box.innerHTML=`<div class="font-bold ${correct?'text-emerald-400':'text-amber-300'}">${correct?'Correct':'Not quite'}</div><div class="text-slate-300 text-xs">${feedback}</div>`;panel.appendChild(box)}this.questionsContainer.appendChild(panel)});this.updateScore()}submitQuiz(){if(this.userAnswers.some(a=>a===null))return;this.quizCard.classList.add('hidden');this.resultsCard.classList.remove('hidden');this.finalScore.textContent=this.score;this.finalTotal.textContent=this.questions.length}resetQuiz(){this.userAnswers=Array(this.questions.length).fill(null);this.resultsCard.classList.add('hidden');this.quizCard.classList.remove('hidden');this.renderQuestions()}}
+new SimpleQuizEngine(quizData);
+</script></body></html>
