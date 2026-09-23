@@ -9,6 +9,10 @@
     body {
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+
+    .question-card {
+      scroll-margin-top: 90px;
+    }
   </style>
 </head>
 <body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col font-sans">
@@ -22,27 +26,19 @@
     </div>
   </header>
 
-  <main class="flex-1 max-w-3xl w-full mx-auto p-6 flex flex-col justify-center">
+  <main class="flex-1 max-w-4xl w-full mx-auto p-6">
     <div id="quiz-card" class="bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6">
-      <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-indigo-400">
-        <span id="question-progress">Question 1 of 15</span>
-        <span>Clinical Genomics</span>
+      <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-indigo-400">
+        <span>Clinical Genomics Assessment</span>
+        <span id="answered-count">0 / 15 answered</span>
       </div>
 
-      <h2 id="question-text" class="text-xl sm:text-2xl font-extrabold text-white leading-snug">Loading question...</h2>
-      <div id="options-container" class="space-y-3"></div>
+      <div id="questions-container" class="space-y-5"></div>
 
-      <div id="feedback-box" class="hidden p-4 rounded-2xl border text-sm space-y-1">
-        <div id="feedback-title" class="font-bold"></div>
-        <div id="feedback-text" class="text-slate-300 text-xs"></div>
-      </div>
-
-      <div class="flex justify-between pt-4 border-t border-slate-700">
-        <button id="btn-prev" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed" type="button">
-          Previous
-        </button>
-        <button id="btn-next" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed" type="button">
-          Next
+      <div class="flex justify-between items-center pt-4 border-t border-slate-700 gap-4">
+        <p id="submission-status" class="text-xs text-slate-400">Answer all questions to submit.</p>
+        <button id="btn-submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed" type="button" disabled>
+          Submit Assessment
         </button>
       </div>
     </div>
@@ -66,7 +62,7 @@
       {
         question: 'What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?',
         options: [
-          ['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma', true, 'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, a fusion gene panel, and rapid heme/solid panels.'],
+          ['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma', true, 'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, and rapid assay options for lung, thyroid, and melanoma.'],
           ['Only solid tumor panels and whole-exome sequencing', false, 'Incorrect. CPD also offers hematologic and rapid panels.'],
           ['Only hematologic malignancy panels and RNA profiling', false, 'Incorrect. Solid tumor and rapid panels are also included.'],
           ['Fusion gene testing and liquid biopsy only', false, 'Incorrect. A broader panel portfolio is offered.']
@@ -120,34 +116,34 @@
       {
         question: 'How does VAF differ between somatic mutations and constitutional SNPs?',
         options: [
-          ['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%', true, 'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs are usually more stable.'],
-          ['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%).', false, 'Incorrect. Somatic variants often vary with purity and copy number; constitutional SNPs are typically much more stable and often near 50% or 100% in germline DNA.'],
-          ['Constitutional SNPs generally have higher VAFs than somatic mutations because they are always present in every cell at 100%.', false, 'Incorrect. Constitutional SNPs are usually present in all cells, but somatic mutations can also be high in clonal disease; VAF depends on biology and sample composition.'],
-          ['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.', false, 'Incorrect. VAF can provide useful abundance information, but it does not by itself distinguish a constitutional SNP from a somatic mutation.']
+          ['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%', true, 'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs usually show stable germline ratios.'],
+          ['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%).', false, 'Incorrect. Somatic variants often vary with purity and copy number.'],
+          ['Constitutional SNPs generally have higher VAFs than somatic mutations because they are always present in every cell at 100%.', false, 'Incorrect. Constitutional SNPs are usually present in a fixed germline copy state, but not necessarily 100% across all cells.'],
+          ['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.', false, 'Incorrect. VAF can provide useful context but does not alone distinguish all variants.']
         ]
       },
       {
         question: 'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',
         options: [
-          ['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant', true, 'Correct. Population frequency and clinical significance distinguish these categories.'],
-          ['Both are inherited germline variants, but pathogenic cancer-predisposing variants are typically found at lower VAFs than common SNPs.', false, 'Incorrect. The distinction is not based on VAF alone; clinical significance and population frequency are more important.'],
-          ['Common SNPs and pathogenic predisposition variants are distinguished primarily by VAF, with pathogenic variants usually occurring at <20% VAF.', false, 'Incorrect. VAF is not the main discriminator between common SNPs and pathogenic germline predisposition variants.'],
-          ['Both can be present in the germline at similar VAFs, but pathogenic predisposition variants are associated with increased cancer risk whereas common SNPs are generally not.', false, 'Incorrect. The key difference is not simply the VAF; pathogenic predisposition variants have higher clinical relevance and lower population frequency.']
+          ['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant', true, 'Correct. Population frequency and clinical relevance are central to the distinction.'],
+          ['Both are inherited germline variants, but pathogenic cancer-predisposing variants are typically found at lower VAFs than common SNPs.', false, 'Incorrect. The distinction is not based on VAF.'],
+          ['Common SNPs and pathogenic predisposition variants are distinguished primarily by VAF, with pathogenic variants usually occurring at <20% VAF.', false, 'Incorrect. VAF is not the main discriminator.'],
+          ['Both can be present in the germline at similar VAFs, but pathogenic predisposition variants are associated with increased cancer risk whereas common SNPs are generally not.', false, 'Incorrect. Similar VAFs do not distinguish pathogenic from benign variants.']
         ]
       },
       {
         question: 'Which NGS approach generally requires more input DNA?',
         options: [
           ['Hybrid-capture assays, because they often need more library input than amplicon assays', true, 'Correct. Hybrid-capture methods typically require more DNA input.'],
-          ['Amplicon assays, because amplification of target regions requires a larger starting amount of DNA to achieve adequate coverage.', false, 'Incorrect. Amplicon assays are generally more efficient for low-input samples and usually require less DNA than hybrid-capture assays.'],
-          ['Hybrid-capture and amplicon assays generally require similar DNA input because both ultimately sequence the same genomic regions.', false, 'Incorrect. Assay design, target complexity, and capture chemistry lead to different input requirements.'],
-          ['The required DNA input is determined solely by sequencing depth and is independent of whether a hybrid-capture or amplicon approach is used.', false, 'Incorrect. DNA input depends on assay type, target size, and coverage requirements as well as depth.']
+          ['Amplicon assays, because amplification of target regions requires a larger starting amount of DNA to achieve adequate coverage.', false, 'Incorrect. Amplicon assays are generally more efficient for limited DNA.'],
+          ['Hybrid-capture and amplicon assays generally require similar DNA input because both ultimately sequence the same genomic regions.', false, 'Incorrect. Assay design and target complexity differ materially.'],
+          ['The required DNA input is determined solely by sequencing depth and is independent of whether a hybrid-capture or amplicon approach is used.', false, 'Incorrect. DNA input depends on assay design, not just sequencing depth.']
         ]
       },
       {
         question: 'Do targeted RNA fusion assays require primers or probes for both partner genes?',
         options: [
-          ['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement', true, 'Correct. RNA fusion assays must interrogate both ends or both partners to detect the rearrangement.'],
+          ['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement', true, 'Correct. RNA fusion assays must interrogate both ends or both partners for robust detection.'],
           ['No. One gene is always enough', false, 'Incorrect. Fusion detection generally requires both partners or a common breakpoint design.'],
           ['Only for DNA assays', false, 'RNA fusion assays are a distinct class of testing.'],
           ['Only if the tumor is low purity', false, 'This is not the reason.']
@@ -156,7 +152,7 @@
       {
         question: 'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',
         options: [
-          ['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations', true, 'Correct. Those resources serve distinct but complementary roles in cancer genomics.'],
+          ['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations', true, 'Correct. Those resources support oncology genomics interpretation in distinct but complementary roles.'],
           ['OncoKB: sequencing chemistry; gnomAD: RNA fusion detection; ClinVar: coverage metrics; COSMIC: tumor purity', false, 'Incorrect. The functions are different.'],
           ['OncoKB: DNA repair pathways; gnomAD: copy-number tools; ClinVar: tumor burden; COSMIC: sequencing primers', false, 'No—those are not the core functions.'],
           ['OncoKB: variant pathology; gnomAD: germline variant genes; ClinVar: tumor mutation counts; COSMIC: therapeutic targets', false, 'Not the primary roles of these datasets.']
@@ -165,16 +161,16 @@
       {
         question: 'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',
         options: [
-          ['Because many ClinVar classifications are based on germline disease contexts and may not directly translate to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and requires careful contextualization for somatic cancer interpretation.'],
-          ['Because many ClinVar classifications are based on somatic tumor evidence and may not directly translate to inherited disease risk', false, 'ClinVar contains extensive germline-oriented clinical interpretation; the concern in somatic oncology is applying germline classifications directly to the tumor context.'],
-          ['Because ClinVar primarily reports population allele frequencies, which may not reflect the clinical significance of a variant', false, 'Population allele frequencies are primarily obtained from resources such as gnomAD; ClinVar focuses on clinical variant classifications and supporting evidence.'],
-          ['Because ClinVar classifications are primarily organized around tumor-specific therapeutic actionability rather than variant pathogenicity', false, 'ClinVar focuses on clinical significance and pathogenicity rather than serving primarily as a somatic therapeutic-actionability database.']
+          ['Because many ClinVar classifications are based on germline disease contexts and may not directly translate to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and often requires cancer-specific contextualization.'],
+          ['Because many ClinVar classifications are based on somatic tumor evidence and may not directly translate to inherited disease risk', false, 'ClinVar contains extensive germline-oriented clinical significance data.'],
+          ['Because ClinVar primarily reports population allele frequencies, which may not reflect the clinical significance of a variant', false, 'Population allele frequencies are primarily obtained from other resources.'],
+          ['Because ClinVar classifications are primarily organized around tumor-specific therapeutic actionability rather than variant pathogenicity', false, 'ClinVar focuses on clinical significance rather than therapeutic actionability alone.']
         ]
       },
       {
         question: 'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',
         options: [
-          ['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations', true, 'Correct. This is the classic distinction between activating and loss-of-function alterations.'],
+          ['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations', true, 'Correct. This is the classic functional distinction used in cancer genomics.'],
           ['Oncogenes are always deletions and tumor suppressors are always duplications', false, 'Incorrect. This reverses the common pattern.'],
           ['All mutations are equally distributed across both classes', false, 'No. Functional consequences differ by gene class.'],
           ['Only oncogenes are found in germline cancer syndromes', false, 'Both may contribute to inherited cancer predisposition.']
@@ -201,7 +197,7 @@
       {
         question: 'Which statement best describes a high-confidence clinical somatic variant in NGS interpretation?',
         options: [
-          ['It is supported by evidence from the tumor context, allele fraction, copy-number context, and validated databases', true, 'Correct. A robust interpretation requires integrating multiple evidence streams.'],
+          ['It is supported by evidence from the tumor context, allele fraction, copy-number context, and validated databases', true, 'Correct. A robust interpretation requires integrating multiple evidence types.'],
           ['It is any variant seen at 50% VAF', false, 'This is too simplistic and often not clinically sufficient.'],
           ['It is only a germline variant found in a reference panel', false, 'This is not how somatic interpretation works.'],
           ['It must be present in all cells and all tissues', false, 'Not necessarily; somatic variants are often heterogeneous.']
@@ -212,20 +208,15 @@
     class SimpleQuizEngine {
       constructor(questions) {
         this.questions = questions;
-        this.currentIndex = 0;
         this.score = 0;
         this.userAnswers = Array(this.questions.length).fill(null);
 
         this.quizScore = document.getElementById('quiz-score');
         this.quizTotal = document.getElementById('quiz-total');
-        this.questionProgress = document.getElementById('question-progress');
-        this.questionText = document.getElementById('question-text');
-        this.optionsContainer = document.getElementById('options-container');
-        this.feedbackBox = document.getElementById('feedback-box');
-        this.feedbackTitle = document.getElementById('feedback-title');
-        this.feedbackText = document.getElementById('feedback-text');
-        this.btnPrev = document.getElementById('btn-prev');
-        this.btnNext = document.getElementById('btn-next');
+        this.answeredCount = document.getElementById('answered-count');
+        this.questionsContainer = document.getElementById('questions-container');
+        this.submitBtn = document.getElementById('btn-submit');
+        this.submissionStatus = document.getElementById('submission-status');
         this.quizCard = document.getElementById('quiz-card');
         this.resultsCard = document.getElementById('results-card');
         this.finalScore = document.getElementById('final-score');
@@ -233,67 +224,10 @@
         this.btnReset = document.getElementById('btn-reset');
 
         this.quizTotal.textContent = this.questions.length;
-        this.btnPrev.addEventListener('click', () => this.prevQuestion());
-        this.btnNext.addEventListener('click', () => this.nextQuestion());
+        this.submitBtn.addEventListener('click', () => this.submitQuiz());
         this.btnReset.addEventListener('click', () => this.resetQuiz());
 
-        this.renderQuestion();
-      }
-
-      resetQuiz() {
-        this.currentIndex = 0;
-        this.score = 0;
-        this.userAnswers = Array(this.questions.length).fill(null);
-        this.resultsCard.classList.add('hidden');
-        this.quizCard.classList.remove('hidden');
-        this.renderQuestion();
-      }
-
-      renderQuestion() {
-        const current = this.questions[this.currentIndex];
-        const selectedIndex = this.userAnswers[this.currentIndex];
-
-        this.questionProgress.textContent = `Question ${this.currentIndex + 1} of ${this.questions.length}`;
-        this.questionText.textContent = current.question;
-        this.optionsContainer.innerHTML = '';
-
-        this.btnPrev.disabled = this.currentIndex === 0;
-        this.btnNext.disabled = selectedIndex === null;
-
-        if (selectedIndex !== null) {
-          const [label, isCorrect, feedback] = current.options[selectedIndex];
-          this.showFeedback(selectedIndex, isCorrect, feedback);
-        } else {
-          this.feedbackBox.classList.add('hidden');
-        }
-
-        current.options.forEach(([label, isCorrect, feedback], index) => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.disabled = selectedIndex !== null;
-          button.className = 'w-full text-left p-4 rounded-2xl border transition-all ' +
-            (selectedIndex === index
-              ? 'border-indigo-500 bg-indigo-500/10 text-white'
-              : 'border-slate-700 bg-slate-900/50 text-slate-200 hover:border-slate-500 hover:bg-slate-800');
-          button.innerHTML = `<span class="font-semibold mr-2">${String.fromCharCode(65 + index)}.</span> ${label}`;
-          button.addEventListener('click', () => {
-            if (selectedIndex !== null) return;
-            this.userAnswers[this.currentIndex] = index;
-            this.renderQuestion();
-          });
-          this.optionsContainer.appendChild(button);
-        });
-
-        this.updateScore();
-
-        this.btnNext.textContent = this.currentIndex === this.questions.length - 1 ? 'Finish' : 'Next';
-      }
-
-      showFeedback(selectedIndex, isCorrect, feedback) {
-        this.feedbackBox.classList.remove('hidden');
-        this.feedbackTitle.textContent = isCorrect ? 'Correct' : 'Not quite';
-        this.feedbackTitle.className = 'font-bold ' + (isCorrect ? 'text-emerald-400' : 'text-amber-300');
-        this.feedbackText.textContent = feedback;
+        this.renderQuestions();
       }
 
       updateScore() {
@@ -305,34 +239,91 @@
         });
         this.score = score;
         this.quizScore.textContent = this.score;
+
+        const answered = this.userAnswers.filter((answer) => answer !== null).length;
+        this.answeredCount.textContent = `${answered} / ${this.questions.length} answered`;
+
+        const allAnswered = answered === this.questions.length;
+        this.submitBtn.disabled = !allAnswered;
+        this.submissionStatus.textContent = allAnswered
+          ? 'All questions answered — ready to submit.'
+          : 'Answer all questions to submit.';
       }
 
-      prevQuestion() {
-        if (this.currentIndex > 0) {
-          this.currentIndex -= 1;
-          this.renderQuestion();
-        }
+      renderQuestions() {
+        this.questionsContainer.innerHTML = '';
+
+        this.questions.forEach((question, questionIndex) => {
+          const selectedIndex = this.userAnswers[questionIndex];
+          const panel = document.createElement('div');
+          panel.className = 'question-card bg-slate-900/60 border border-slate-700 rounded-2xl p-5 space-y-4';
+
+          const header = document.createElement('div');
+          header.className = 'flex items-center justify-between gap-3';
+          header.innerHTML = `<span class="text-xs uppercase tracking-[0.2em] font-bold text-indigo-400">Question ${questionIndex + 1}</span>`;
+          panel.appendChild(header);
+
+          const prompt = document.createElement('h3');
+          prompt.className = 'text-lg font-bold text-white leading-snug';
+          prompt.textContent = question.question;
+          panel.appendChild(prompt);
+
+          const optionList = document.createElement('div');
+          optionList.className = 'space-y-3';
+
+          question.options.forEach(([label, isCorrect, feedback], optionIndex) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            const isSelected = selectedIndex === optionIndex;
+            button.className = 'w-full text-left p-4 rounded-2xl border transition-all ' +
+              (isSelected
+                ? 'border-indigo-500 bg-indigo-500/10 text-white'
+                : 'border-slate-700 bg-slate-800/50 text-slate-200 hover:border-slate-500 hover:bg-slate-800');
+            button.innerHTML = `<span class="font-semibold mr-2">${String.fromCharCode(65 + optionIndex)}.</span> ${label}`;
+
+            button.addEventListener('click', () => {
+              this.userAnswers[questionIndex] = optionIndex;
+              this.renderQuestions();
+            });
+
+            optionList.appendChild(button);
+          });
+
+          panel.appendChild(optionList);
+
+          if (selectedIndex !== null) {
+            const [selectedLabel, isCorrect, feedback] = question.options[selectedIndex];
+            const feedbackBox = document.createElement('div');
+            feedbackBox.className = 'p-4 rounded-2xl border text-sm space-y-1';
+            feedbackBox.innerHTML = `
+              <div class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-amber-300'}">${isCorrect ? 'Correct' : 'Not quite'}</div>
+              <div class="text-slate-300 text-xs">${feedback}</div>
+            `;
+            panel.appendChild(feedbackBox);
+          }
+
+          this.questionsContainer.appendChild(panel);
+        });
+
+        this.updateScore();
       }
 
-      nextQuestion() {
-        if (this.userAnswers[this.currentIndex] === null) {
+      submitQuiz() {
+        if (this.userAnswers.some((answer) => answer === null)) {
           return;
         }
 
-        if (this.currentIndex < this.questions.length - 1) {
-          this.currentIndex += 1;
-          this.renderQuestion();
-          return;
-        }
-
-        this.showResults();
-      }
-
-      showResults() {
         this.quizCard.classList.add('hidden');
         this.resultsCard.classList.remove('hidden');
         this.finalScore.textContent = this.score;
         this.finalTotal.textContent = this.questions.length;
+      }
+
+      resetQuiz() {
+        this.userAnswers = Array(this.questions.length).fill(null);
+        this.resultsCard.classList.add('hidden');
+        this.quizCard.classList.remove('hidden');
+        this.renderQuestions();
       }
     }
 
