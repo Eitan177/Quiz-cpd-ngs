@@ -163,12 +163,12 @@
         ]
       },
       {
-        question: 'Why must ClinVar entries be interpreted with caution?',
+        question: 'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',
         options: [
-          ['Because classifications are context-dependent and may not directly map to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and requires careful contextualization.'],
-          ['Because it is never used in clinical genomics', false, 'ClinVar is widely used, but must be interpreted correctly.'],
-          ['Because it lists only benign variants', false, 'ClinVar includes pathogenic, benign, and uncertain entries.'],
-          ['Because it is curated by software only', false, 'ClinVar is reviewed and manually curated by experts.']
+          ['Because many ClinVar classifications are based on germline disease contexts and may not directly translate to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and requires careful contextualization for somatic cancer interpretation.'],
+          ['Because many ClinVar classifications are based on somatic tumor evidence and may not directly translate to inherited disease risk', false, 'ClinVar contains extensive germline-oriented clinical interpretation; the concern in somatic oncology is applying germline classifications directly to the tumor context.'],
+          ['Because ClinVar primarily reports population allele frequencies, which may not reflect the clinical significance of a variant', false, 'Population allele frequencies are primarily obtained from resources such as gnomAD; ClinVar focuses on clinical variant classifications and supporting evidence.'],
+          ['Because ClinVar classifications are primarily organized around tumor-specific therapeutic actionability rather than variant pathogenicity', false, 'ClinVar focuses on clinical significance and pathogenicity rather than serving primarily as a somatic therapeutic-actionability database.']
         ]
       },
       {
