@@ -66,7 +66,7 @@
       {
         question: 'What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?',
         options: [
-          ['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma', true, 'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, plus Fusion gene, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma.'],
+          ['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma', true, 'Correct! CPD offers hybrid-capture panels for solid tumors and hematologic malignancies, a fusion gene panel, and rapid heme/solid panels.'],
           ['Only solid tumor panels and whole-exome sequencing', false, 'Incorrect. CPD also offers hematologic and rapid panels.'],
           ['Only hematologic malignancy panels and RNA profiling', false, 'Incorrect. Solid tumor and rapid panels are also included.'],
           ['Fusion gene testing and liquid biopsy only', false, 'Incorrect. A broader panel portfolio is offered.']
@@ -120,16 +120,16 @@
       {
         question: 'How does VAF differ between somatic mutations and constitutional SNPs?',
         options: [
-          ['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%', true, 'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs are typically near 50% or 100%.'],
-          ['Somatic mutations always have 50% VAF', false, 'Incorrect. Somatic VAF can vary substantially.'],
-          ['Constitutional SNPs are always pathogenic', false, 'No. Many SNPs are benign, and variant interpretation depends on context.'],
-          ['They are identical in all clinical settings', false, 'They are interpreted differently and arise in different biological contexts.']
+          ['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%', true, 'Correct. Somatic VAF is dependent on tumor content and copy number; constitutional SNPs are usually more stable.'],
+          ['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%).', false, 'Incorrect. Somatic variants often vary with purity and copy number; constitutional SNPs are typically much more stable and often near 50% or 100% in germline DNA.'],
+          ['Constitutional SNPs generally have higher VAFs than somatic mutations because they are always present in every cell at 100%.', false, 'Incorrect. Constitutional SNPs are usually present in all cells, but somatic mutations can also be high in clonal disease; VAF depends on biology and sample composition.'],
+          ['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.', false, 'Incorrect. VAF can provide useful abundance information, but it does not by itself distinguish a constitutional SNP from a somatic mutation.']
         ]
       },
       {
         question: 'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',
         options: [
-          ['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant', true, 'Correct. Population frequency and clinical significance differ substantially between common benign SNPs and pathogenic cancer-predisposition variants.'],
+          ['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and clinically significant', true, 'Correct. Population frequency and clinical significance distinguish these categories.'],
           ['Both are always pathogenic', false, 'No. Many common SNPs are benign.'],
           ['Both always occur at 50% VAF', false, 'That is not a reliable comparison across germline and tumor contexts.'],
           ['They are unrelated to cancer risk', false, 'Inherited pathogenic germline variants can increase cancer risk.']
@@ -156,7 +156,7 @@
       {
         question: 'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',
         options: [
-          ['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations', true, 'Correct. Those resources serve distinct but complementary roles in cancer genomics interpretation.'],
+          ['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence; COSMIC: catalog of somatic cancer mutations', true, 'Correct. Those resources serve distinct but complementary roles in cancer genomics.'],
           ['OncoKB: sequencing chemistry; gnomAD: RNA fusion detection; ClinVar: coverage metrics; COSMIC: tumor purity', false, 'Incorrect. The functions are different.'],
           ['OncoKB: DNA repair pathways; gnomAD: copy-number tools; ClinVar: tumor burden; COSMIC: sequencing primers', false, 'No—those are not the core functions.'],
           ['OncoKB: variant pathology; gnomAD: germline variant genes; ClinVar: tumor mutation counts; COSMIC: therapeutic targets', false, 'Not the primary roles of these datasets.']
@@ -165,7 +165,7 @@
       {
         question: 'Why must ClinVar entries be interpreted with caution?',
         options: [
-          ['Because classifications are context-dependent and may not directly map to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and requires careful contextualization for cancer applications.'],
+          ['Because classifications are context-dependent and may not directly map to somatic cancer relevance', true, 'Correct. ClinVar is heavily germline-focused and requires careful contextualization.'],
           ['Because it is never used in clinical genomics', false, 'ClinVar is widely used, but must be interpreted correctly.'],
           ['Because it lists only benign variants', false, 'ClinVar includes pathogenic, benign, and uncertain entries.'],
           ['Because it is curated by software only', false, 'ClinVar is reviewed and manually curated by experts.']
@@ -174,7 +174,7 @@
       {
         question: 'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',
         options: [
-          ['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations', true, 'Correct. This is the classic distinction between activating oncogenic alterations and inactivating tumor suppressor events.'],
+          ['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes often show loss-of-function or truncating alterations', true, 'Correct. This is the classic distinction between activating and loss-of-function alterations.'],
           ['Oncogenes are always deletions and tumor suppressors are always duplications', false, 'Incorrect. This reverses the common pattern.'],
           ['All mutations are equally distributed across both classes', false, 'No. Functional consequences differ by gene class.'],
           ['Only oncogenes are found in germline cancer syndromes', false, 'Both may contribute to inherited cancer predisposition.']
