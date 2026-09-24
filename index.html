@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UPenn Clinical Molecular Pathology Trainee Assessment</title>
+  <title>Bring your A game (or your T game, or your C game, or your G game) | UPenn Clinical Molecular Pathology Trainee Assessment</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -13,7 +13,8 @@
 <body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col font-sans">
   <header class="w-full py-5 px-8 border-b border-slate-800 bg-slate-950 flex justify-between items-center sticky top-0 z-50">
     <div>
-      <h1 class="text-lg font-bold text-white">UPenn Clinical Molecular Pathology Trainee Assessment</h1>
+      <h1 class="text-lg font-bold text-white">Bring your A game (or your T game, or your C game, or your G game)</h1>
+      <p class="text-xs text-slate-400 mt-1">UPenn Clinical Molecular Pathology Trainee Assessment</p>
     </div>
     <div class="flex items-center gap-4">
       <span class="text-xs uppercase tracking-[0.2em] text-slate-400">Standalone</span>
@@ -23,14 +24,15 @@
 
   <main class="flex-1 max-w-4xl w-full mx-auto p-6">
     <div id="quiz-card" class="bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6">
-      <div class="flex items-center justify-between">
-        <div class="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-sm font-semibold text-cyan-300">Score: <span id="quiz-score">0</span></div>
+      <div class="flex items-center justify-between gap-4">
+        <p class="text-sm text-slate-300">Select an answer for each question, then use <strong>Check answer</strong> to see the feedback. Submit the quiz at the end for your overall score.</p>
+        <div class="shrink-0 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-sm font-semibold text-cyan-300">Score: <span id="quiz-score">0</span></div>
       </div>
       <div id="question-container" class="space-y-6"></div>
-      <div class="flex justify-between items-center border-t border-slate-700 pt-4">
-        <button id="prev-btn" class="rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed" style="display:none" disabled>Previous</button>
-        <button id="next-btn" class="rounded-full bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 transition" style="display:none">Next</button>
+      <div class="flex justify-center border-t border-slate-700 pt-6">
+        <button id="submit-btn" class="rounded-full bg-cyan-500 px-6 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-400 transition">Submit overall score</button>
       </div>
+      <div id="final-result" class="hidden rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-5 text-center text-cyan-100"></div>
     </div>
   </main>
 
@@ -51,72 +53,134 @@
       {question:'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',options:[['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and carries clinically relevant risk',true,'Correct. Common SNPs are generally low-penetrance population variants, whereas pathogenic hereditary cancer variants are typically rare and clinically significant.'],['A common SNP is often pathogenic, while an inherited cancer predisposition variant is often benign',false,'Incorrect. This reverses the clinical significance of the two categories.'],['Both are often somatic and therefore detected only in tumor tissue',false,'Incorrect. Germline SNPs and inherited cancer predisposition variants are constitutional, not somatic.'],['A pathogenic predisposition variant is usually more common in the population than a common SNP',false,'Incorrect. Pathogenic hereditary variants are generally far less common than benign common SNPs.']]},
       {question:'Which NGS approach generally requires more input DNA?',options:[['Hybrid-capture assays, because they often need more library input than amplicon assays',true,'Correct. Hybrid-capture methods typically need more starting DNA than amplicon-based assays.'],['Amplicon assays, because they require broad genomic coverage',false,'Incorrect. Amplicon assays usually need less input DNA due to targeted amplification.'],['Both approaches often require similar amounts of DNA',false,'Incorrect. Input requirements differ by assay design and complexity.'],['Neither approach requires a minimum amount of DNA for sequencing',false,'Incorrect. All NGS workflows still require sufficient material for library preparation.']]},
       {question:'Do our targeted RNA fusion assays require primers or probes for both partner genes?',options:[['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement accurately',true,'Correct. RNA fusion assays typically need reagents directed to both gene partners for reliable detection of the fusion transcript.'],['No. A single probe to one partner gene is usually sufficient to detect a fusion event',false,'Incorrect. Reagent design generally covers both sides of the fusion to identify the rearrangement accurately.'],['No. RNA fusion assays only need a generic control primer and no gene-specific design',false,'Incorrect. Gene-specific design is essential for accurate fusion detection.'],['If the fusion is in-frame, one partner is often sufficient',false,'Incorrect. Detection relies on both fusion partners regardless of the exact transcript architecture.']]},
-      {question:'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',options:[['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence review; COSMIC: cancer mutation catalog',true,'Correct. These resources serve complementary roles in clinical cancer genomics interpretation.'],['OncoKB: population frequencies; gnomAD: drug response data; ClinVar: fusion detection; COSMIC: germline variant reporting',false,'Incorrect. These assignments reverse the intended roles of the resources.'],['OncoKB: copy-number analysis; gnomAD: variant classification; ClinVar: RNA fusion assay design; COSMIC: DNA sequencing QC',false,'Incorrect. These are not the primary functions of these databases.'],['OncoKB: sample QC; gnomAD: oncolog y databases; ClinVar: PCR primer design; COSMIC: tumor purity estimation',false,'Incorrect. None of these matches the known roles of the core genomic resources.']]},
+      {question:'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',options:[['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence review; COSMIC: cancer mutation catalog',true,'Correct. These resources serve complementary roles in clinical cancer genomics interpretation.'],['OncoKB: population frequencies; gnomAD: drug response data; ClinVar: fusion detection; COSMIC: germline variant reporting',false,'Incorrect. These assignments reverse the intended roles of the resources.'],['OncoKB: copy-number analysis; gnomAD: variant classification; ClinVar: RNA fusion assay design; COSMIC: DNA sequencing QC',false,'Incorrect. These are not the primary functions of these databases.'],['OncoKB: sample QC; gnomAD: oncology databases; ClinVar: PCR primer design; COSMIC: tumor purity estimation',false,'Incorrect. None of these matches the known roles of the core genomic resources.']]},
       {question:'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',options:[['Because many ClinVar classifications are based on germline disease contexts and may not apply to tumor-specific somatic biology',true,'Correct. ClinVar is a valuable resource, but many entries originate from germline disease studies and require careful application to somatic cancer settings.'],['Because ClinVar often emphasizes benign variants and rarely reports cancer-associated changes',false,'Incorrect. ClinVar includes a broad spectrum of variant interpretations, including pathogenic and uncertain classifications.'],['Because ClinVar is often populated by tumor sequencing studies and lacks clinical relevance',false,'Incorrect. ClinVar includes diverse evidence sources beyond tumor sequencing.'],['Because ClinVar is designed specifically for RNA fusion interpretation rather than DNA variant classification',false,'Incorrect. This is not the purpose of ClinVar.']]},
       {question:'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',options:[['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes are commonly inactivated by loss-of-function alterations',true,'Correct. Oncogenes frequently show activating hotspot events, while tumor suppressor genes often undergo loss-of-function changes.'],['Oncogenes usually lose function with nonsense mutations, whereas tumor suppressor genes are often activated by amplifications',false,'Incorrect. This reverses the canonical oncogene versus tumor suppressor gene patterns.'],['Both are often mutated at similar allele frequencies in many tumors',false,'Incorrect. Mutation patterns vary by gene class and tumor biology.'],['Tumor suppressor genes are often identified only by splice-site mutations and oncogenes only by promoter variants',false,'Incorrect. Variant classes are broader and not restricted to these categories.']]},
       {question:'How are computational variant-effect predictions typically used when evaluating clinical genomics data?',options:[['They are typically used for sanity checking',false,'Incorrect. These tools can help with review, but they are not the main basis for clinical interpretation.'],['They may supplement expert review',true,'Correct. Computational predictions are most useful when they supplement expert review rather than replace it.'],['They are often sufficient to establish pathogenicity without much clinical or functional evidence',false,'Incorrect. Prediction scores alone are not enough for definitive clinical assessment.'],['They are most accurate in the setting of rare variants in tumor-only assays',false,'Incorrect. Rare variants in tumor-only settings can be challenging; these tools are not a substitute for contextual evidence.']]},
-      {question:'Where are splice sites located?',options:[['At exon-intron boundaries',true,'Correct. Canonical splice donor and acceptor sites are found at exon-intron junctions.'],['At the start codon',false,'Incorrect. Start codons are translation initiation sites, not splice junctions.'],['Within the 3\' and 5\' UTRs',false,'Incorrect. Splice sites are not located within untranslated regions.'],['At the poly(A) tail',false,'Incorrect. Poly(A) tails are downstream processing signals, not splice junctions.']]},
+      {question:'Where are splice sites located?',options:[['At exon-intron boundaries',true,'Correct. Canonical splice donor and acceptor sites are found at exon-intron junctions.'],['At the start codon',false,'Incorrect. Start codons are translation initiation sites, not splice junctions.'],["Within the 3' and 5' UTRs",false,'Incorrect. Splice sites are not located within untranslated regions.'],['At the poly(A) tail',false,'Incorrect. Poly(A) tails are downstream processing signals, not splice junctions.']]},
       {question:'Where are the canonical splice site dinucleotides?',options:[['Donor GT; acceptor AG',true,'Correct. The canonical splice donor and acceptor dinucleotides are GT and AG, respectively.'],['Donor GG; acceptor AA',false,'Incorrect. This is not the canonical splice motif.'],['Donor TG; acceptor CG',false,'Incorrect. This combination does not match the canonical splice donor/acceptor sequence.'],['Donor AG; acceptor AG',false,'Incorrect. The donor and acceptor sites are distinct and the canonical motif is GT/AG.']]},
       {question:'Which statement best describes a high-confidence clinical somatic variant in NGS interpretation?',options:[['It is supported by evidence from the tumor context, allele fraction, copy-number considerations, and orthogonal validation when appropriate',true,'Correct. High-confidence somatic calls require integrated evidence from biology, variant characteristics, and often orthogonal confirmation.'],['It is often any variant found in a tumor sample regardless of VAF or gene context',false,'Incorrect. Context and evidence matter greatly in distinguishing true somatic findings from artifacts.'],['It is often a germline SNP with a high VAF in normal tissue',false,'Incorrect. Germline variants are not the same as somatic clinical events.'],['It is often defined by a nonsynonymous coding mutation in an oncogene',false,'Incorrect. Somatic calls are broader and require more context than a single mutation type.']]},
       {question:'Which statement best describes a variant of somatic origin?',options:[['A novel variant found in a tumor sample',true,'Correct. A somatic variant is, in the broadest sense, a variant detected in tumor tissue that is consistent with a tumor-derived change.'],['It is supported by orthogonal testing',false,'Incorrect. Orthogonal confirmation is helpful for validation, but it is not the definition of a variant of somatic origin.'],['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)',false,'Incorrect. CHIP is a distinct clonal process and is not the same as a tumor-derived somatic variant.'],['A mutation that is not necessarily a CHIP mutation but could be',false,'Incorrect. This is vague and does not define a somatic variant as clearly as a tumor-derived variant itself.']]},
       {question:'Which statement best describes a clinically relevant variant of somatic origin?',options:[['It is supported by evidence from the tumor context, allele fraction, copy-number considerations, and orthogonal validation when appropriate',true,'Correct. A clinically relevant somatic variant is typically supported by the tumor context, VAF, copy-number context, and often orthogonal evidence.'],['A novel variant found in a tumor sample',false,'Incorrect. A variant seen in tumor tissue is not automatically clinically relevant without supporting evidence.'],['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)',false,'Incorrect. CHIP is a distinct clonal process and is not the same as a tumor-derived actionable somatic variant.'],['A mutation that is not necessarily a CHIP mutation but could be',false,'Incorrect. This is too uncertain to define a clinically relevant somatic variant.']]},
-      {question:'In a tumor-only NGS workflow, which pattern is most consistent with a true somatic alteration rather than a sequencing artifact or a common germline SNP?',options:[['A recurrent hotspot mutation with a variant allele fraction consistent with tumor purity and copy number',true,'Correct. In tumor-only analysis, recurrent hotspot changes with biologically plausible VAF are a classic pattern for true somatic events.'],['A variant seen at roughly 50% VAF in many samples regardless of tumor content',false,'Incorrect. That pattern is more consistent with a constitutional heterozygous germline variant or a technical artifact.'],['A low-quality mutation present across most reads with no strand bias and no obvious threshold issues',false,'Incorrect. This would be unusual for a true somatic event and more consistent with systematic error.'],['A variant absent from many known oncogenes and occurring at a high fraction in a mixed sample',false,'Incorrect. This does not fit the expected biology of a true tumor-derived change.']]}
+      {question:'What patterns are consistent with a sequencing artifact as opposed to a true somatic alteration?',multi:true,options:[['A recurrent hotspot mutation with a variant allele fraction consistent with tumor purity and copy number',false,'Incorrect. A recurrent hotspot with a biologically plausible VAF is more consistent with a true somatic alteration.'],['A low-quality call near the reporting threshold with strand bias and inconsistent read support',true,'Correct. Low quality, strand bias, threshold-level VAF, and inconsistent read support are patterns that can indicate an artifact.'],['A variant with poor mapping quality and support concentrated in a small number of reads',true,'Correct. Poor mapping quality and limited, uneven read support can indicate a sequencing or alignment artifact.'],['A variant confirmed by an orthogonal assay and supported by the tumor context',false,'Incorrect. Orthogonal confirmation and tumor-context support favor a true somatic alteration.']]}
     ];
 
+    // Rotate answer order so correct choices are distributed across A-D rather than concentrated in one position.
+    const answerOrders = [
+      [1,2,0,3], [2,0,3,1], [3,1,2,0], [1,3,0,2], [2,3,1,0], [0,2,3,1],
+      [3,0,1,2], [2,1,3,0], [1,3,2,0], [3,2,0,1], [2,0,1,3], [1,3,0,2],
+      [3,1,0,2], [2,0,3,1], [1,2,3,0], [3,0,2,1], [2,1,0,3], [1,3,2,0],
+      [3,2,1,0], [2,3,0,1], [1,0,3,2]
+    ];
+    quizData.forEach((question, index) => {
+      const order = answerOrders[index];
+      question.options = order.map((optionIndex) => question.options[optionIndex]);
+    });
+
     const userAnswers = Array(quizData.length).fill(null);
+    const checkedAnswers = Array(quizData.length).fill(false);
     const quizScore = document.getElementById('quiz-score');
     const questionContainer = document.getElementById('question-container');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
     const restartBtn = document.getElementById('restart-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const finalResult = document.getElementById('final-result');
+
+    function isCorrect(index) {
+      const answer = userAnswers[index];
+      if (answer === null) return false;
+      const question = quizData[index];
+      if (question.multi) {
+        return Array.isArray(answer) && answer.length > 0 && answer.every((optionIndex) => question.options[optionIndex][1]) && question.options.every((option, optionIndex) => option[1] === answer.includes(optionIndex));
+      }
+      return question.options[answer][1] === true;
+    }
 
     function updateScore() {
-      let score = 0;
-      quizData.forEach((question, index) => {
-        if (userAnswers[index] !== null && question.options[userAnswers[index]][1]) {
-          score += 1;
-        }
-      });
+      const score = quizData.reduce((total, question, index) => total + (checkedAnswers[index] && isCorrect(index) ? 1 : 0), 0);
       quizScore.textContent = score;
+    }
+
+    function checkAnswer(index) {
+      const question = quizData[index];
+      const selection = userAnswers[index];
+      if (selection === null || (question.multi && selection.length === 0)) {
+        alert('Please select an answer before checking.');
+        return;
+      }
+      checkedAnswers[index] = true;
+      updateScore();
+      renderQuestions();
     }
 
     function renderQuestions() {
       questionContainer.innerHTML = quizData.map((question, index) => {
-        const selected = userAnswers[index];
+        const selection = userAnswers[index];
+        const answered = checkedAnswers[index];
+        const selected = (optionIndex) => question.multi ? Array.isArray(selection) && selection.includes(optionIndex) : selection === optionIndex;
+        const resultClass = answered ? (isCorrect(index) ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-200' : 'border-rose-500/50 bg-rose-500/10 text-rose-200') : 'border-slate-700 bg-slate-900/60';
+        const resultText = answered ? (isCorrect(index) ? 'Correct!' : 'Not quite. Review the answer choices and feedback.') : '';
         return `
-          <div class="question-card rounded-2xl border border-slate-700 bg-slate-900/60 p-5">
-            <p class="text-sm uppercase tracking-[0.2em] text-cyan-300">Question ${index + 1}</p>
+          <div class="question-card rounded-2xl border ${resultClass} p-5">
+            <p class="text-sm uppercase tracking-[0.2em] text-cyan-300">Question ${index + 1}${question.multi ? ' · Select all that apply' : ''}</p>
             <h3 class="mt-3 text-2xl font-bold text-white">${question.question}</h3>
             <div class="mt-5 space-y-3">
-              ${question.options.map(([text, isCorrect, feedback], optionIndex) => `
-                <label class="block cursor-pointer rounded-xl border ${selected === optionIndex ? 'border-cyan-400 bg-cyan-500/10' : 'border-slate-700 bg-slate-800/60'} p-3 transition hover:border-slate-500">
+              ${question.options.map(([text], optionIndex) => `
+                <label class="block cursor-pointer rounded-xl border ${selected(optionIndex) ? 'border-cyan-400 bg-cyan-500/10' : 'border-slate-700 bg-slate-800/60'} p-3 transition hover:border-slate-500">
                   <div class="flex items-start gap-3">
-                    <input class="mt-1" type="radio" name="question-${index}" value="${optionIndex}" ${selected === optionIndex ? 'checked' : ''} />
-                    <span class="text-slate-100">${text}</span>
+                    <input class="mt-1" type="${question.multi ? 'checkbox' : 'radio'}" name="question-${index}" value="${optionIndex}" ${selected(optionIndex) ? 'checked' : ''} />
+                    <span class="text-slate-100">${String.fromCharCode(65 + optionIndex)}. ${text}</span>
                   </div>
                 </label>
               `).join('')}
             </div>
+            <div class="mt-5 flex items-center gap-4">
+              <button class="check-btn rounded-full bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-600 transition" data-index="${index}">${answered ? 'Recheck answer' : 'Check answer'}</button>
+              <span class="text-sm font-semibold">${resultText}</span>
+            </div>
+            ${answered ? `<div class="mt-4 space-y-2 text-sm">${question.options.map(([text, correct, feedback], optionIndex) => `<p class="${correct ? 'text-emerald-300' : 'text-slate-300'}"><strong>${String.fromCharCode(65 + optionIndex)}:</strong> ${feedback}</p>`).join('')}</div>` : ''}
           </div>
         `;
       }).join('');
 
-      questionContainer.querySelectorAll('input[type="radio"]').forEach((input) => {
+      questionContainer.querySelectorAll('.check-btn').forEach((button) => {
+        button.addEventListener('click', () => checkAnswer(Number(button.dataset.index)));
+      });
+      questionContainer.querySelectorAll('input').forEach((input) => {
         input.addEventListener('change', (event) => {
           const index = Number(event.target.name.replace('question-', ''));
-          userAnswers[index] = Number(event.target.value);
+          const optionIndex = Number(event.target.value);
+          if (quizData[index].multi) {
+            const current = Array.isArray(userAnswers[index]) ? [...userAnswers[index]] : [];
+            userAnswers[index] = event.target.checked ? [...current, optionIndex] : current.filter((value) => value !== optionIndex);
+          } else {
+            userAnswers[index] = optionIndex;
+          }
+          checkedAnswers[index] = false;
           updateScore();
+          renderQuestions();
         });
       });
-
-      prevBtn.style.display = 'none';
-      nextBtn.style.display = 'none';
     }
+
+    submitBtn.addEventListener('click', () => {
+      const unanswered = quizData.filter((_, index) => !checkedAnswers[index]).length;
+      if (unanswered > 0) {
+        alert(`Please check each answer before submitting. ${unanswered} question${unanswered === 1 ? '' : 's'} still need${unanswered === 1 ? 's' : ''} to be checked.`);
+        return;
+      }
+      const score = quizData.reduce((total, _, index) => total + (isCorrect(index) ? 1 : 0), 0);
+      finalResult.textContent = `Quiz complete! Your score is ${score} out of ${quizData.length}.`;
+      finalResult.classList.remove('hidden');
+      finalResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 
     restartBtn.addEventListener('click', () => {
       userAnswers.fill(null);
-      renderQuestions();
+      checkedAnswers.fill(false);
+      finalResult.classList.add('hidden');
       updateScore();
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     renderQuestions();
