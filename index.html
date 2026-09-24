@@ -16,7 +16,7 @@
 <body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col font-sans">
   <header class="w-full py-5 px-8 border-b border-slate-800 bg-slate-950 flex justify-between items-center sticky top-0 z-50">
     <div>
-      <h1 class="text-lg font-bold text-white"><span></span>UPenn Clinical Molecular Pathology Trainee Assessment<span>   Bring your A game (or your T game, or your C game, or your G game)</span></h1>
+      <h1 class="text-lg font-bold text-white"><span></span>UPenn CPD Trainee Assessment<span>   Bring your A game (or your T game, or your C game, or your G game)</span></h1>
       <p class="text-xs text-slate-400 mt-1">Standalone assessment</p>
     </div>
     <button id="restart-btn" class="rounded-full border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-700 transition">Restart</button>
@@ -271,7 +271,7 @@
     ];
 
     // Shuffle options order deterministically based on map
-    const orders = [[1,2,0,3],[0,1,2,3,4],[2,0,3,1,4],[3,1,0,2,4],[1,3,2,0],[2,3,0,1,4],[3,0,1,2,4],[1,2,3,0],[2,0,1,3,4],[3,1,0,2,4],[0,2,3,1,4],[1,3,0,2,4],[2,1,3,0,4],[3,0,2,1,4],[1,2,0,3,4],[2,3,1,0,4],[3,1,0,2,4,5],[1,3,2,0,4],[2,0,3,1,4],[3,1,2,0,4],[1,0,3,2,4]];
+    const orders = [[1,2,0,3],[0,1,2,3,4],[2,0,3,1,4],[3,1,0,2,4],[1,3,2,0],[2,3,0,1,4],[3,0,1,2,4],[1,2,3,0],[2,0,1,3,4],[3,1,0,2,4],[0,2,3,1,4],[1,3,0,2,4],[2,1,3,0,4],[3,0,2,1,4],[1,2,0,3,4],[2,3,1,0,4],[3,1,0,2,4,5],[1,3,2,0,4],[2,0,3,1,4],[0,1,2,3,4],[1,0,3,2,4]];
     quizData.forEach((question, index) => {
       if (orders[index] && orders[index].length === question.options.length) {
         question.options = orders[index].map((i) => question.options[i]);
