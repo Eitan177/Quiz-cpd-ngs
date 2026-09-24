@@ -79,7 +79,7 @@
         ]
       },
       {
-        question: 'With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant present in all tumor cells?',
+        question: 'With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant present in the sample if only the tumor cells carry this somatic variant?',
         options: [
           ['20%', true],
           ['40%', false],
@@ -153,7 +153,7 @@
           ['Amplicon assays, because they require broad genomic coverage', false],
           ['Both approaches often require similar amounts of DNA', false],
           ['Neither approach requires a minimum amount of DNA for sequencing', false],
-          ['Hybrid capture assays be because they need both intracellular and extracellular nucleic acid', false]
+          ['Hybrid capture assays because they need both intracellular and extracellular nucleic acid', false]
         ]
       },
       {
@@ -217,13 +217,14 @@
         ]
       },
       {
-        question: 'Where are the canonical splice site dinucleotides?',
+        question: 'What are the canonical splice site dinucleotides?',
         options: [
           ['Donor GT; acceptor AG', true],
           ['Donor GG; acceptor AA', false],
           ['Donor TG; acceptor CG', false],
           ['Donor AG; acceptor AG', false],
-          ["Don't you mean 'what are the canonical splice site dinucleotides?'", false]
+          ["Don't you mean 'what are the canonical splice site dinucleotides?'", false],
+          ['Donor O-; acceptor AB+', false]
         ]
       },
       {
@@ -237,7 +238,7 @@
         ]
       },
       {
-        question: 'Which statement best describes a variant of somatic origin?',
+        question: 'Which statement best describes a variant of somatic origin associated with a tumor of solid tissue origin?',
         options: [
           ['A novel variant found in a tumor sample', true],
           ['It is supported by orthogonal testing', false],
@@ -247,13 +248,13 @@
         ]
       },
       {
-        question: 'Which statement best describes a clinically relevant variant of somatic origin?',
+        question: 'Which statement best describes a clinically relevant variant of somatic origin associated with a tumor of solid tissue origin?',
         options: [
+          ['A mutation that is not necessarily a CHIP mutation but could be', false],
+          ['Inverse of above: A mutation that is necessarily a chip mutation but also, somehow, couldn\'t be', false],
           ['It is supported by evidence from the tumor context, allele fraction, copy-number considerations, and orthogonal validation when appropriate', true],
           ['A novel variant found in a tumor sample', false],
-          ['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)', false],
-          ['A mutation that is not necessarily a CHIP mutation but could be', false],
-          ['All of the above', false]
+          ['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)', false]
         ]
       },
       {
@@ -270,7 +271,7 @@
     ];
 
     // Shuffle options order deterministically based on map
-    const orders = [[1,2,0,3],[0,1,2,3,4],[2,0,3,1,4],[3,1,0,2,4],[1,3,2,0],[2,3,0,1,4],[3,0,1,2,4],[1,2,3,0],[2,0,1,3,4],[3,1,0,2,4],[0,2,3,1,4],[1,3,0,2,4],[2,1,3,0,4],[3,0,2,1,4],[1,2,0,3,4],[2,3,1,0,4],[3,1,0,2,4],[1,3,2,0,4],[2,0,3,1,4],[3,2,1,0,4],[1,0,3,2,4]];
+    const orders = [[1,2,0,3],[0,1,2,3,4],[2,0,3,1,4],[3,1,0,2,4],[1,3,2,0],[2,3,0,1,4],[3,0,1,2,4],[1,2,3,0],[2,0,1,3,4],[3,1,0,2,4],[0,2,3,1,4],[1,3,0,2,4],[2,1,3,0,4],[3,0,2,1,4],[1,2,0,3,4],[2,3,1,0,4],[3,1,0,2,4,5],[1,3,2,0,4],[2,0,3,1,4],[3,1,2,0,4],[1,0,3,2,4]];
     quizData.forEach((question, index) => {
       if (orders[index] && orders[index].length === question.options.length) {
         question.options = orders[index].map((i) => question.options[i]);
