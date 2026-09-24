@@ -3,41 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bring your A game | UPenn Clinical Molecular Pathology Trainee Assessment</title>
+  <title>Bring your A game (or your T game, or your C game, or your G game) | UPenn Clinical Molecular Pathology Trainee Assessment</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <style>body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.question-card{scroll-margin-top:90px}</style>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .question-card { scroll-margin-top: 90px; }
+    .contributors { position: fixed; right: 1rem; top: 7rem; width: 12rem; }
+    @media (max-width: 900px) { .contributors { position: static; width: auto; margin: 0 1.5rem 1rem; } }
+  </style>
 </head>
-<body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col">
-<header class="sticky top-0 z-50 flex justify-between items-center w-full px-8 py-5 border-b border-slate-800 bg-slate-950"><div><h1 class="text-lg font-bold text-white">Bring your A game (or your T game, or your C game, or your G game) | UPenn Clinical Molecular Pathology Trainee Assessment</h1><p class="text-xs text-slate-400 mt-1">Standalone assessment</p></div><button id="restart" class="rounded-full border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs">Restart</button></header>
-<main class="flex-1 max-w-4xl w-full mx-auto p-6"><div class="bg-slate-800/80 border border-slate-700 p-8 rounded-3xl shadow-2xl"><div class="flex justify-between gap-4 mb-6"><p class="text-sm text-slate-300">Select an answer for each question, check each answer, and submit your score.</p><strong class="text-cyan-300">Score: <span id="score">0</span>/21</strong></div><div id="quiz" class="space-y-6"></div><div class="text-center border-t border-slate-700 pt-6 mt-6"><button id="submit" class="rounded-full bg-cyan-500 px-6 py-3 text-sm font-bold text-slate-950">Submit overall score</button></div><div id="result" class="hidden mt-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-5 text-center text-cyan-100"></div></div></main>
-<footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-800">UPenn Clinical Molecular Pathology Trainee Assessment • Standalone Edition</footer>
-<script>
-const quizData=[
-['What specific NGS panels are offered at CPD at UPenn?',['Hybrid-capture solid-tumor and hematologic panels, Fusion, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma','Whole-exome sequencing only','RNA sequencing and liquid-biopsy testing only','Whole-genome sequencing and methylation profiling'],0],
-['Which somatic variant tier represents variants linked directly to FDA-approved therapies?',['Tier II','Tier I','Tier III','Tier IV'],1],
-['With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant in all tumor cells?',['20%','40%','50%','80%'],0],
-['How many genes are evaluated in PennSeq Solid 2.1 versus Heme 2.1?',['Solid: 215; Heme: 202','Solid: 202; Heme: 215','Solid: 45; Heme: 58','Solid: 58; Heme: 45'],0],
-['How many genes are evaluated in TEMP 2.0 versus HEXS 1.0?',['TEMP 45; HEXS 58','TEMP 215; HEXS 202','TEMP 58; HEXS 45','TEMP 90; HEXS 120'],0],
-['What is Tumor Mutational Burden (TMB)?',['The number of passenger somatic mutations per megabase of DNA','The number of driver mutations per megabase','The number of driver and passenger mutations per megabase','The number of SNPs per megabase'],0],
-['Which classes of genomic variants do we typically see and report on PennSeq?',['Exonic variants and intronic variants near exon-intron borders','All intronic variants anywhere in introns','Exonic and intragenic variants only','Exonic variants exclusively'],0],
-['How does VAF differ between somatic mutations and constitutional SNPs?',['Somatic VAF varies with purity and copy number, while constitutional SNPs are usually near 50% or 100%','Somatic variants are always near 50% and SNPs are below 10%','Constitutional SNPs always have higher VAF than somatic variants','VAF cannot distinguish or characterize either type'],0],
-['How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',['A common SNP is usually benign and common; a pathogenic predisposition variant is often rare and clinically relevant','A common SNP is usually pathogenic; an inherited variant is usually benign','Both are somatic and detected only in tumor tissue','A pathogenic predisposition variant is more common than a common SNP'],0],
-['Which NGS approach generally requires more input DNA?',['Hybrid-capture assays','Amplicon assays','Both require similar amounts','Neither requires DNA'],0],
-['Do targeted RNA fusion assays require primers or probes for both partner genes?',['Yes, they generally require design specific to both fusion partners','No, one partner is always sufficient','No, only a generic control primer is required','Only if the fusion is in-frame'],0],
-['What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',['OncoKB: oncology interpretation; gnomAD: population frequencies; ClinVar: evidence review; COSMIC: cancer mutation catalog','OncoKB: population frequencies; gnomAD: drug response; ClinVar: fusion detection; COSMIC: germline reporting','They all perform the same function','They are all quality-control databases'],0],
-['Why must ClinVar entries be interpreted with caution in somatic cancer interpretation?',['Many classifications are based on germline disease contexts and may not apply to tumor-specific somatic biology','ClinVar emphasizes benign variants and rarely reports cancer changes','ClinVar is populated only by tumor sequencing studies','ClinVar is designed only for RNA fusion interpretation'],0],
-['What patterns distinguish oncogene mutations from tumor-suppressor mutations?',['Oncogenes are often activated by gain-of-function hotspots, while tumor suppressors are commonly inactivated by loss-of-function changes','Oncogenes usually lose function and tumor suppressors gain function','Both show the same recurrent pattern','Tumor suppressors are identified only by splice variants'],0],
-['How are computational variant-effect predictions typically used in clinical genomics?',['They may supplement expert review as part of a broader evidence framework','They are sufficient by themselves to establish pathogenicity','They are used only for quality control','They are most accurate for rare variants in tumor-only assays'],0],
-['Where are splice sites located?',['At exon-intron boundaries','At the start codon','Within the 3’ and 5’ UTRs','At the poly(A) tail'],0],
-['Where are the canonical splice-site dinucleotides?',['Donor GT; acceptor AG','Donor GG; acceptor AA','Donor TG; acceptor CG','Donor AG; acceptor AG'],0],
-['Which types of variants usually do not get reported regardless of gene?',['Nonsense','Splice site','Missense','Synonymous'],3],
-['Which statement best describes a variant of somatic origin?',['A novel variant found in a tumor sample','A variant supported by orthogonal testing','A mutation associated with CHIP','A variant that is not necessarily a CHIP mutation'],0],
-['Which statement best describes a clinically relevant variant of somatic origin?',['It is supported by tumor context, allele fraction, copy-number considerations, and appropriate orthogonal validation','A novel variant found in a tumor sample','A mutation associated with CHIP','A variant that could be any unvalidated alteration'],0],
-['Which patterns are consistent with a sequencing artifact rather than a true somatic alteration?',['A low-quality call near the reporting threshold with strand bias and inconsistent read support','A recurrent hotspot with VAF consistent with purity and copy number','A variant with poor mapping quality concentrated in few reads','A variant confirmed by orthogonal testing and supported by tumor context'],[0,2]]
-];
-let answers=Array(21).fill(null),checked=Array(21).fill(false);const quiz=document.getElementById('quiz'),score=document.getElementById('score'),result=document.getElementById('result');
-function isCorrect(i){const a=answers[i],c=quizData[i][2];return Array.isArray(c)?Array.isArray(a)&&a.length===c.length&&a.every(x=>c.includes(x)):a===c}
-function render(){quiz.innerHTML=quizData.map((q,i)=>{const multi=Array.isArray(q[2]),a=answers[i],done=checked[i];return `<section class="question-card rounded-2xl border ${done?(isCorrect(i)?'border-emerald-500/50 bg-emerald-500/10':'border-rose-500/50 bg-rose-500/10'):'border-slate-700 bg-slate-900/60'} p-5"><p class="text-sm uppercase tracking-[0.2em] text-cyan-300">Question ${i+1}${multi?' · Select all that apply':''}</p><h2 class="mt-3 text-2xl font-bold text-white">${q[0]}</h2><div class="mt-5 space-y-3">${q[1].map((text,n)=>`<label class="block cursor-pointer rounded-xl border ${multi?(Array.isArray(a)&&a.includes(n)):a===n?'border-cyan-400 bg-cyan-500/10':'border-slate-700 bg-slate-800/60'} p-3"><input type="${multi?'checkbox':'radio'}" name="q${i}" value="${n}" ${(multi?Array.isArray(a)&&a.includes(n):a===n)?'checked':''}> <span>${String.fromCharCode(65+n)}. ${text}</span></label>`).join('')}</div><button class="check mt-5 rounded-full bg-slate-700 px-4 py-2 text-sm" data-i="${i}">${done?'Recheck answer':'Check answer'}</button> ${done?`<span class="ml-3 text-sm font-semibold">${isCorrect(i)?'Correct!':'Not quite.'}</span>`:''}</section>`}).join('');quiz.querySelectorAll('input').forEach(x=>x.onchange=()=>{const i=+x.name.slice(1),n=+x.value;if(Array.isArray(quizData[i][2])){const a=Array.isArray(answers[i])?[...answers[i]]:[];answers[i]=x.checked?[...a,n]:a.filter(v=>v!==n)}else answers[i]=n;checked[i]=false;update();render()});quiz.querySelectorAll('.check').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(answers[i]===null||(Array.isArray(answers[i])&&!answers[i].length))return alert('Please select an answer before checking.');checked[i]=true;update();render()})}
-function update(){score.textContent=quizData.reduce((n,_,i)=>n+(checked[i]&&isCorrect(i)?1:0),0)}
-document.getElementById('submit').onclick=()=>{if(checked.some(x=>!x))return alert('Please check each answer before submitting.');result.textContent=`Quiz complete! Your score is ${quizData.reduce((n,_,i)=>n+(isCorrect(i)?1:0),0)} out of 21.`;result.classList.remove('hidden')};document.getElementById('restart').onclick=()=>{answers=Array(21).fill(null);checked=Array(21).fill(false);result.classList.add('hidden');render();update();scrollTo({top:0,behavior:'smooth'})};render();update();
-</script></body></html>
+<body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col font-sans">
+  <header class="w-full py-5 px-8 border-b border-slate-800 bg-slate-950 flex justify-between items-center sticky top-0 z-50">
+    <div>
+      <h1 class="text-lg font-bold text-white"><span></span>UPenn Clinical Molecular Pathology Trainee Assessment<span>Bring your A game (or your T game, or your C game, or your G game)</span></h1>
+      <p class="text-xs text-slate-400 mt-1">Standalone assessment</p>
+    </div>
+    <button id="restart-btn" class="rounded-full border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-700 transition">Restart</button>
+  </header>
+
+  <aside class="contributors rounded-xl border border-slate-700 bg-slate-800/80 p-4 text-sm text-slate-300 shadow-lg">
+    <p class="font-semibold text-white">Created by:</p>
+    <p class="mt-2">Eitan Halper-Stromberg<br>Henry Sanchez<br>Yeon-whan Choe</p>
+  </aside>
+
+  <main class="flex-1 max-w-4xl w-full mx-auto p-6">
+    <div id="quiz-card" class="bg-slate-800/80 border border-slate-700/80 p-8 rounded-3xl shadow-2xl space-y-6">
+      <div class="flex items-center justify-between gap-4">
+        <p class="text-sm text-slate-300">Select an answer for each question, check your answer, and submit your overall score at the end.</p>
+        <div class="shrink-0 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-sm font-semibold text-cyan-300">Score: <span id="quiz-score">0</span></div>
+      </div>
+      <div id="question-container" class="space-y-6"></div>
+      <div class="flex justify-center border-t border-slate-700 pt-6">
+        <button id="submit-btn" class="rounded-full bg-cyan-500 px-6 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-400 transition">Submit overall score</button>
+      </div>
+      <div id="final-result" class="hidden rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-5 text-center text-cyan-100"></div>
+    </div>
+  </main>
+
+  <footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-800 space-y-3">
+    <p>UPenn Clinical Molecular Pathology Trainee Assessment &bull; Standalone Edition</p>
+    <label class="block max-w-xl mx-auto text-left px-6">
+      <span class="text-slate-400">Submit feedback</span>
+      <textarea id="feedback-box" rows="3" placeholder="Enter feedback..." class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-800 p-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
+    </label>
+    <div id="feedback-message" class="hidden max-w-xl mx-auto rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-amber-200">
+      <svg class="mx-auto mb-2 h-12 w-12" viewBox="0 0 64 64" fill="none" aria-label="Disconnected telephone" role="img"><path d="M20 19c-5 1-8 5-7 10 2 12 10 20 22 22 5 1 9-2 10-7l1-5-10-4-4 5c-4-2-7-5-9-9l5-4-4-10-4 2Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M43 20 55 8M55 20 43 8" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+      Sorry, out of service.
+    </div>
+  </footer>
+
+  <script>
+    const quizData = [
+      {question:'What specific Next-Generation Sequencing (NGS) panels are offered at the Center for Personalized Diagnostics (CPD) at UPenn?',options:[['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, and Rapid Solid panels for lung, thyroid, and melanoma',true],['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, Rapid Solid panels, and whole-exome sequencing',false],['Hybrid-capture panels for solid tumors and hematologic malignancies, a Fusion gene panel, Rapid Heme, RNA sequencing, and liquid-biopsy testing',false],['Hybrid-capture panels for solid tumors, Rapid Solid panels, Rapid Heme, whole-genome sequencing, and methylation profiling',false]]},
+      {question:'Which category in our somatic variant interpretation frameworks represents variants linked directly to FDA-approved therapies?',options:[['Tier II - Variants of Potential Clinical Significance',false],['Tier I - Variants of Strong Clinical Significance',true],['Tier III - Variants of Unknown Significance',false],['Tier IV - Benign or Likely Benign',false]]},
+      {question:'With 40% tumor purity, what is the expected approximate VAF for a heterozygous somatic variant present in all tumor cells?',options:[['20%',true],['40%',false],['50%',false],['80%',false]]},
+      {question:'How many genes are evaluated in the PennSeq Solid 2.1 versus Heme 2.1 panels?',options:[['Solid: 215; Heme: 202',true],['Solid: 202; Heme: 215',false],['Solid: 45; Heme: 58',false],['Solid: 58; Heme: 45',false]]},
+      {question:'How many genes are evaluated in TEMP 2.0 versus HEXS 1.0?',options:[['TEMP 45; HEXS 58',true],['TEMP 215; HEXS 202',false],['TEMP 58; HEXS 45',false],['TEMP 90; HEXS 120',false]]},
+      {question:'What is Tumor Mutational Burden (TMB)?',options:[['The number of passenger somatic mutations per megabase of DNA',true],['The number of driver somatic mutations per megabase of DNA',false],['The number of driver and passenger somatic mutations per megabase of DNA',false],['The number of SNPs per megabase of DNA',false]]},
+      {question:'Which classes of genomic variants do we typically see and report on our PennSeq assay?',options:[['Exonic variants as well as intronic variants near the exon-intron border',true],['Exonic variants along with intronic variants anywhere within the intronic space',false],['Exonic variants along with intragenic variants near covered genes',false],['Exclusively exonic variants',false]]},
+      {question:'How does VAF differ between somatic mutations and constitutional SNPs?',options:[['Somatic VAF varies with purity and copy number, whereas constitutional SNPs are usually near 50% or 100%',true],['Somatic mutations typically occur at a VAF of ~50%, whereas constitutional SNPs are usually present at low VAFs (<10%)',false],['Constitutional SNPs generally have higher VAFs than somatic mutations because they are often present in every cell at 100%',false],['VAF can be used to estimate the abundance of a somatic mutation, but constitutional SNPs and somatic mutations cannot be distinguished by VAF alone.',false]]},
+      {question:'How do a common germline SNP and an inherited pathogenic cancer-predisposing variant compare?',options:[['A common SNP is usually benign and common in the population; a pathogenic predisposition variant is often rare and carries clinically relevant risk',true],['A common SNP is often pathogenic, while an inherited cancer predisposition variant is often benign',false],['Both are often somatic and therefore detected only in tumor tissue',false],['A pathogenic predisposition variant is usually more common in the population than a common SNP',false]]},
+      {question:'Which NGS approach generally requires more input DNA?',options:[['Hybrid-capture assays, because they often need more library input than amplicon assays',true],['Amplicon assays, because they require broad genomic coverage',false],['Both approaches often require similar amounts of DNA',false],['Neither approach requires a minimum amount of DNA for sequencing',false]]},
+      {question:'Do our targeted RNA fusion assays require primers or probes for both partner genes?',options:[['No, our RNA fusion assay only needs primers designed for one of the partner genes',true],['Yes. They generally require sequence capture or design specific to both fusion partners to detect the rearrangement accurately',false],['No. RNA fusion assays only need a generic control primer and no gene-specific design',false],['If the fusion is in-frame, one partner is often sufficient',false]]},
+      {question:'What are the primary functions of OncoKB, gnomAD, ClinVar, and COSMIC?',options:[['OncoKB: oncology-specific variant interpretation; gnomAD: population frequencies; ClinVar: variant evidence review; COSMIC: cancer mutation catalog',true],['OncoKB: population frequencies; gnomAD: drug response data; ClinVar: fusion detection; COSMIC: germline variant reporting',false],['OncoKB: copy-number analysis; gnomAD: variant classification; ClinVar: RNA fusion assay design; COSMIC: DNA sequencing QC',false],['OncoKB: sample QC; gnomAD: oncology databases; ClinVar: PCR primer design; COSMIC: tumor purity estimation',false]]},
+      {question:'Why must ClinVar entries be interpreted with caution in somatic cancer variant interpretation?',options:[['Because many ClinVar classifications are based on germline disease contexts and may not apply to tumor-specific somatic biology',true],['Because ClinVar often emphasizes benign variants and rarely reports cancer-associated changes',false],['Because ClinVar is often populated by tumor sequencing studies and lacks clinical relevance',false],['Because ClinVar is designed specifically for RNA fusion interpretation rather than DNA variant classification',false]]},
+      {question:'What patterns distinguish mutations in oncogenes from tumor suppressor genes?',options:[['Oncogenes are often activated by gain-of-function hotspot mutations, whereas tumor suppressor genes are commonly inactivated by loss-of-function alterations',true],['Oncogenes usually lose function with nonsense mutations, whereas tumor suppressor genes are often activated by amplifications',false],['Both are often mutated at similar allele frequencies in many tumors',false],['Tumor suppressor genes are often identified only by splice-site mutations and oncogenes only by promoter variants',false]]},
+      {question:'How are computational variant-effect predictions typically used when evaluating clinical genomics data?',options:[['They are typically used for sanity checking',false],['They may supplement expert review',true],['They are often sufficient to establish pathogenicity without much clinical or functional evidence',false],['They are most accurate in the setting of rare variants in tumor-only assays',false]]},
+      {question:'Where are splice sites located?',options:[['At exon-intron boundaries',true],['At the start codon',false],["Within the 3' and 5' UTRs",false],['At the poly(A) tail',false]]},
+      {question:'Where are the canonical splice site dinucleotides?',options:[['Donor GT; acceptor AG',true],['Donor GG; acceptor AA',false],['Donor TG; acceptor CG',false],['Donor AG; acceptor AG',false]]},
+      {question:'Which types of variants usually do not get reported regardless of the type of gene in which they are found?',options:[['Nonsense',false],['Splice site',false],['Missense',false],['Synonymous',true]]},
+      {question:'Which statement best describes a variant of somatic origin?',options:[['A novel variant found in a tumor sample',true],['It is supported by orthogonal testing',false],['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)',false],['A mutation that is not necessarily a CHIP mutation but could be',false]]},
+      {question:'Which statement best describes a clinically relevant variant of somatic origin?',options:[['It is supported by evidence from the tumor context, allele fraction, copy-number considerations, and orthogonal validation when appropriate',true],['A novel variant found in a tumor sample',false],['A mutation associated with clonal hematopoiesis of indeterminate potential (CHIP)',false],['A mutation that is not necessarily a CHIP mutation but could be',false]]},
+      {question:'What patterns are consistent with a sequencing artifact as opposed to a true somatic alteration?',multi:true,options:[['A recurrent hotspot mutation with a variant allele fraction consistent with tumor purity and copy number',false],['A low-quality call near the reporting threshold with strand bias and inconsistent read support',true],['A variant with poor mapping quality and support concentrated in a small number of reads',true],['A variant confirmed by an orthogonal assay and supported by the tumor context',false]]}
+    ];
+
+    // Deliberately distribute the correct choices across A-D.
+    const orders = [[1,2,0,3],[0,1,2,3],[2,0,3,1],[3,1,0,2],[1,3,2,0],[2,3,0,1],[3,0,1,2],[1,2,3,0],[2,0,1,3],[3,1,0,2],[0,2,3,1],[1,3,0,2],[2,1,3,0],[3,0,2,1],[1,2,0,3],[2,3,1,0],[3,1,0,2],[1,3,2,0],[2,0,3,1],[3,2,1,0],[1,0,3,2]];
+    quizData.forEach((question, index) => { question.options = orders[index].map((i) => question.options[i]); });
+
+    const answers = Array(quizData.length).fill(null);
+    const checked = Array(quizData.length).fill(false);
+    const scoreEl = document.getElementById('quiz-score');
+    const container = document.getElementById('question-container');
+    const result = document.getElementById('final-result');
+
+    function correct(index) {
+      const q = quizData[index], answer = answers[index];
+      if (answer === null) return false;
+      if (!q.multi) return q.options[answer][1] === true;
+      return Array.isArray(answer) && answer.length > 0 && q.options.every((option, i) => Boolean(option[1]) === answer.includes(i));
+    }
+    function updateScore() { scoreEl.textContent = quizData.reduce((n, _, i) => n + (checked[i] && correct(i) ? 1 : 0), 0); }
+    function render() {
+      container.innerHTML = quizData.map((q, i) => {
+        const answer = answers[i], selected = (n) => q.multi ? Array.isArray(answer) && answer.includes(n) : answer === n;
+        const done = checked[i], good = done && correct(i);
+        return `<section class="question-card rounded-2xl border ${done ? (good ? 'border-emerald-500/50 bg-emerald-500/10' : 'border-rose-500/50 bg-rose-500/10') : 'border-slate-700 bg-slate-900/60'} p-5">
+          <p class="text-sm uppercase tracking-[0.2em] text-cyan-300">Question ${i + 1}${q.multi ? ' · Select all that apply' : ''}</p>
+          <h2 class="mt-3 text-2xl font-bold text-white">${q.question}</h2>
+          <div class="mt-5 space-y-3">${q.options.map(([text], n) => `<label class="block cursor-pointer rounded-xl border ${selected(n) ? 'border-cyan-400 bg-cyan-500/10' : 'border-slate-700 bg-slate-800/60'} p-3"><div class="flex items-start gap-3"><input class="mt-1" type="${q.multi ? 'checkbox' : 'radio'}" name="q-${i}" value="${n}" ${selected(n) ? 'checked' : ''}><span>${String.fromCharCode(65+n)}. ${text}</span></div></label>`).join('')}</div>
+          <div class="mt-5 flex items-center gap-4"><button class="check rounded-full bg-slate-700 px-4 py-2 text-sm font-semibold hover:bg-slate-600" data-i="${i}">${done ? 'Recheck answer' : 'Check answer'}</button><span class="text-sm font-semibold">${done ? (good ? 'Correct!' : 'Not quite.') : ''}</span></div>
+        </section>`;
+      }).join('');
+      container.querySelectorAll('input').forEach((input) => input.addEventListener('change', (e) => {
+        const i = Number(e.target.name.slice(2)), n = Number(e.target.value), q = quizData[i];
+        if (q.multi) { const current = Array.isArray(answers[i]) ? [...answers[i]] : []; answers[i] = e.target.checked ? [...current, n] : current.filter((x) => x !== n); } else answers[i] = n;
+        checked[i] = false; updateScore(); render();
+      }));
+      container.querySelectorAll('.check').forEach((button) => button.addEventListener('click', () => {
+        const i = Number(button.dataset.i); if (answers[i] === null || (quizData[i].multi && !answers[i].length)) return alert('Please select an answer before checking.'); checked[i] = true; updateScore(); render();
+      }));
+    }
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      if (checked.some((v) => !v)) return alert('Please check each answer before submitting.');
+      result.textContent = `Quiz complete! Your score is ${quizData.reduce((n, _, i) => n + (correct(i) ? 1 : 0), 0)} out of ${quizData.length}.`;
+      result.classList.remove('hidden'); result.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+    document.getElementById('restart-btn').addEventListener('click', () => { answers.fill(null); checked.fill(false); result.classList.add('hidden'); updateScore(); render(); window.scrollTo({top:0, behavior:'smooth'}); });
+    document.getElementById('feedback-box').addEventListener('focus', () => document.getElementById('feedback-message').classList.remove('hidden'));
+    render(); updateScore();
+  </script>
+</body>
+</html>
