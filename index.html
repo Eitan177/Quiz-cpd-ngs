@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,3 +124,18 @@
       result.classList.remove('hidden'); result.scrollIntoView({behavior:'smooth', block:'center'});
     });
     document.getElementById('restart-btn').addEventListener('click', () => { answers.fill(null); checked.fill(false); result.classList.add('hidden'); updateScore(); render(); window.scrollTo({top:0, behavior:'smooth'}); });
+    
+    document.getElementById('submit-feedback-btn').addEventListener('click', () => {
+      const fbText = document.getElementById('feedback-box').value.trim();
+      if (!fbText) {
+        alert('Please enter some feedback before submitting.');
+        return;
+      }
+      alert("Feedback transmitted directly to Joe's Neuralink implant!");
+      document.getElementById('feedback-box').value = '';
+    });
+
+    render(); updateScore();
+  </script>
+</body>
+</html>
